@@ -132,7 +132,25 @@ export default function ContractForm() {
     });
   };
 
+  const validateContract = (): string[] => {
+    const errors: string[] = [];
+    if (!contractData.contractNumber) errors.push('Brak numeru umowy');
+    if (!contractData.product?.id) errors.push('Nie wybrano zestawu');
+    if (!contractData.client?.fullName) errors.push('Brak danych klienta (imię i nazwisko)');
+    if (!contractData.pricing?.financing) errors.push('Nie wybrano formy płatności');
+    if (!contractData.client?.address?.street) errors.push('Brak adresu klienta');
+    if (!contractData.client?.phone) errors.push('Brak numeru telefonu klienta');
+    if (!contractData.client?.email) errors.push('Brak adresu e-mail klienta');
+    return errors;
+  };
+
   const handleGenerate = () => {
+    const errors = validateContract();
+    if (errors.length > 0) {
+      errors.forEach(e => toast.error(e));
+      return;
+    }
+
     const data = contractData as ContractData;
     const summary: ContractSummary = {
       id: crypto.randomUUID(),
@@ -210,7 +228,20 @@ export default function ContractForm() {
           Wstecz
         </Button>
         {currentStep < STEPS.length - 1 ? (
-          <Button onClick={nextStep} className="bg-[#B5005D] hover:bg-[#9a004f] text-white">
+          <Button
+            onClick={() => {
+              // Validate before going to Summary step
+              if (currentStep === STEPS.length - 2) {
+                const errors = validateContract();
+                if (errors.length > 0) {
+                  errors.forEach(e => toast.error(e));
+                  return;
+                }
+              }
+              nextStep();
+            }}
+            className="bg-[#B5005D] hover:bg-[#9a004f] text-white"
+          >
             Dalej
             <ChevronRight className="ml-2 h-4 w-4" />
           </Button>
@@ -709,6 +740,8 @@ function StepAttachments({ getField, updateField }: StepProps) {
 
 // ──── Step 5: Sales Rep ────
 function StepSalesRep({ getField, updateField }: StepProps) {
+  const hasMeterOwner = !!(getField('meterOwner.fullName') as string);
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2 text-white/60 mb-2">
@@ -722,6 +755,73 @@ function StepSalesRep({ getField, updateField }: StepProps) {
         <FieldRow label="Stanowisko">
           <FormInput path="salesRep.position" getField={getField} updateField={updateField} placeholder="Przedstawiciel handlowy" />
         </FieldRow>
+      </div>
+
+      {/* ─── Edycja dokumentów ─── */}
+      <div className="border-t border-white/10 pt-6 mt-6">
+        <div className="flex items-center gap-2 text-white/60 mb-4">
+          <FileText className="h-4 w-4" />
+          <span className="text-sm font-medium">Edycja dokumentów — pola dodatkowe</span>
+        </div>
+
+        <div className="space-y-4">
+          <FieldRow label="Numer PPE (Punkt Poboru Energii)">
+            <FormInput path="ppeNumber" getField={getField} updateField={updateField} placeholder="np. 590322400000000000" />
+          </FieldRow>
+
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="meterOwner"
+              checked={hasMeterOwner}
+              onCheckedChange={(checked) => {
+                if (!checked) {
+                  updateField('meterOwner.fullName', '');
+                  updateField('meterOwner.pesel', '');
+                  updateField('meterOwner.address.street', '');
+                  updateField('meterOwner.address.postalCode', '');
+                  updateField('meterOwner.address.city', '');
+                } else {
+                  updateField('meterOwner.fullName', ' ');
+                }
+              }}
+            />
+            <label htmlFor="meterOwner" className="text-sm text-white/70 cursor-pointer">
+              Właściciel licznika inny niż Zamawiający
+            </label>
+          </div>
+
+          {hasMeterOwner && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-6 border-l-2 border-amber-500/30">
+              <FieldRow label="Imię i nazwisko właściciela licznika" required>
+                <FormInput path="meterOwner.fullName" getField={getField} updateField={updateField} placeholder="Anna Kowalska" />
+              </FieldRow>
+              <FieldRow label="PESEL właściciela licznika">
+                <FormInput path="meterOwner.pesel" getField={getField} updateField={updateField} placeholder="00000000000" />
+              </FieldRow>
+              <div className="md:col-span-2">
+                <FieldRow label="Adres właściciela licznika">
+                  <FormInput path="meterOwner.address.street" getField={getField} updateField={updateField} placeholder="ul. Przykładowa 1" />
+                </FieldRow>
+              </div>
+              <FieldRow label="Kod pocztowy">
+                <FormInput path="meterOwner.address.postalCode" getField={getField} updateField={updateField} placeholder="00-000" />
+              </FieldRow>
+              <FieldRow label="Miejscowość">
+                <FormInput path="meterOwner.address.city" getField={getField} updateField={updateField} placeholder="Warszawa" />
+              </FieldRow>
+            </div>
+          )}
+
+          <FieldRow label="Uwagi / notatki dodatkowe">
+            <Textarea
+              value={(getField('additionalNotes') as string) || ''}
+              onChange={(e) => updateField('additionalNotes', e.target.value)}
+              placeholder="Np. dodatkowe ustalenia z klientem, specjalne warunki montażu..."
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/30 min-h-[80px]"
+              rows={3}
+            />
+          </FieldRow>
+        </div>
       </div>
     </div>
   );

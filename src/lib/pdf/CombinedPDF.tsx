@@ -14,7 +14,7 @@ Font.register({ family: 'Roboto-Bold', src: `data:font/truetype;base64,${robotoB
 const NEXBE_FOOTER = 'Nexbe sp. z o.o. | ul. Stefana Batorego 18/108, 02-591 Warszawa | nexbe.pl | kontakt@nexbe.pl | +48 732 080 101';
 
 function FooterComponent() {
-  return <Text style={styles.footer}>{NEXBE_FOOTER}</Text>;
+  return <Text style={styles.footer} fixed>{NEXBE_FOOTER}</Text>;
 }
 
 function PageNum() {
@@ -29,8 +29,8 @@ function PageNum() {
 
 function Header({ right }: { right: string }) {
   return (
-    <View style={styles.header}>
-      <Image src={`data:image/png;base64,${logoWhiteBase64}`} style={{ width: 90, height: 28 }} />
+    <View style={styles.header} fixed>
+      <Image src={logoWhiteBase64} style={{ width: 90, height: 28 }} />
       <View style={styles.headerRight}>
         <Text>{right}</Text>
       </View>
@@ -40,8 +40,8 @@ function Header({ right }: { right: string }) {
 
 function getSubsidyProgramName(program?: string): string {
   switch (program) {
-    case 'MOJ_PRAD': return 'Program „Mój Prąd" (aktualna edycja)';
-    case 'CZYSTE_POWIETRZE': return 'Program „Czyste Powietrze"';
+    case 'MOJ_PRAD': return 'Program \u201eMój Prąd\u201d (aktualna edycja)';
+    case 'CZYSTE_POWIETRZE': return 'Program \u201eCzyste Powietrze\u201d';
     default: return 'Program dofinansowania NFOŚiGW';
   }
 }
@@ -57,11 +57,13 @@ export function CombinedPDF({ data }: { data: ContractData }) {
   const net = d.pricing?.netPrice || 0;
   const vat = d.pricing?.vatAmount || 0;
   const osdName = d.existingPV?.osd ? getOSDName(d.existingPV.osd) : '_______________';
+  const salesRepName = d.salesRep?.fullName || '_______________';
+  const salesRepPosition = d.salesRep?.position || 'Przedstawiciel handlowy';
 
   return (
     <Document>
-      {/* ═══════ CONTRACT PAGE 1 ═══════ */}
-      <Page size="A4" style={styles.page}>
+      {/* ═══════ CONTRACT — all sections in one flowing page ═══════ */}
+      <Page size="A4" style={styles.page} wrap>
         <Header right={`Umowa nr ${d.contractNumber}\n${formatDatePolish(d.contractDate)}`} />
 
         <Text style={styles.title}>UMOWA NUMER {d.contractNumber}</Text>
@@ -79,8 +81,8 @@ export function CombinedPDF({ data }: { data: ContractData }) {
           przy ulicy Stefana Batorego 18/108, 02-591 Warszawa, wpisaną do rejestru
           przedsiębiorców Krajowego Rejestru Sądowego pod numerem KRS 0001174829,
           REGON 541818351, NIP 7011261848, kapitał zakładowy: 100 000,00 PLN,
-          reprezentowaną przez Zarząd Spółki,
-          zwaną dalej „Wykonawcą"
+          reprezentowaną przez: {salesRepName} — {salesRepPosition}, na podstawie pełnomocnictwa udzielonego przez Zarząd Spółki,
+          zwaną dalej \u201eWykonawcą\u201d
         </Text>
 
         <Text style={[styles.paragraph, { textAlign: 'center', marginVertical: 6 }]}>a</Text>
@@ -105,10 +107,11 @@ export function CombinedPDF({ data }: { data: ContractData }) {
         )}
 
         <Text style={styles.paragraph}>
-          zwanym dalej „Zamawiającym", w dalszej części zwanymi łącznie „Stronami"
-          bądź każde osobno „Stroną".
+          zwanym dalej \u201eZamawiającym\u201d, w dalszej części zwanymi łącznie \u201eStronami\u201d
+          bądź każde osobno \u201eStroną\u201d.
         </Text>
 
+        {/* ─── §1 ─── */}
         <Text style={styles.sectionTitle}>§ 1. PRZEDMIOT UMOWY</Text>
 
         <Text style={styles.paragraph}>
@@ -143,12 +146,33 @@ export function CombinedPDF({ data }: { data: ContractData }) {
           ))}
         </View>
 
+        {/* Meter owner if different from client */}
+        {d.meterOwner?.fullName && d.meterOwner.fullName !== d.client?.fullName && (
+          <View style={[styles.highlightBox, { marginTop: 6 }]}>
+            <Text style={[styles.paragraph, { fontFamily: 'Roboto-Bold' }]}>
+              Właściciel licznika (jeśli inny niż Zamawiający):
+            </Text>
+            <Text style={styles.paragraph}>
+              {d.meterOwner.fullName}
+              {d.meterOwner.pesel ? `, PESEL: ${d.meterOwner.pesel}` : ''}
+              {d.meterOwner.address?.street ? `, zam. ${d.meterOwner.address.street}, ${d.meterOwner.address.postalCode || ''} ${d.meterOwner.address.city || ''}` : ''}
+            </Text>
+          </View>
+        )}
+
+        {/* PPE number */}
+        {d.ppeNumber && (
+          <Text style={styles.paragraph}>
+            Numer Punktu Poboru Energii (PPE): {d.ppeNumber}
+          </Text>
+        )}
+
         <Text style={styles.paragraph}>
           6. W ramach realizacji Umowy Wykonawca zobowiązuje się wykonać następujące obowiązki:
         </Text>
         <View style={styles.indent}>
           <Text style={styles.paragraph}>a) wykonanie obmiaru technicznego niezbędnego do projektu rozbudowy;</Text>
-          <Text style={styles.paragraph}>b) wykonanie projektu rozbudowy Instalacji przez Projektanta („Projekt");</Text>
+          <Text style={styles.paragraph}>b) wykonanie projektu rozbudowy Instalacji przez Projektanta (\u201eProjekt\u201d);</Text>
           <Text style={styles.paragraph}>c) dostarczenie komponentów na miejsce inwestycji;</Text>
           <Text style={styles.paragraph}>d) wykonanie demontażu dotychczasowego falownika (jeśli dotyczy);</Text>
           <Text style={styles.paragraph}>e) montaż magazynu energii, falownika hybrydowego i systemu EMS zgodnie z Projektem;</Text>
@@ -166,13 +190,7 @@ export function CombinedPDF({ data }: { data: ContractData }) {
           </Text>
         </View>
 
-        <FooterComponent />
-        <PageNum />
-      </Page>
-
-      {/* ═══════ CONTRACT PAGE 2: §2 + §3 ═══════ */}
-      <Page size="A4" style={styles.page}>
-        <Header right={`Umowa nr ${d.contractNumber}`} />
+        {/* ─── §2 ─── */}
         <Text style={styles.sectionTitle}>§ 2. WYNAGRODZENIE</Text>
 
         <Text style={styles.paragraph}>
@@ -254,6 +272,7 @@ export function CombinedPDF({ data }: { data: ContractData }) {
           fakturę korygującą, a Zamawiający zobowiązany będzie do zapłaty różnicy.
         </Text>
 
+        {/* ─── §3 ─── */}
         <Text style={styles.sectionTitle}>§ 3. REALIZACJA PRAC</Text>
         <Text style={styles.paragraph}>
           1. Szczegółowe ustalenia techniczne zostaną zawarte w Arkuszu Ustaleń Montażowych (AUM)
@@ -287,13 +306,7 @@ export function CombinedPDF({ data }: { data: ContractData }) {
           7. Wykonawca nie ponosi odpowiedzialności za opóźnienia z przyczyn od niego niezależnych.
         </Text>
 
-        <FooterComponent />
-        <PageNum />
-      </Page>
-
-      {/* ═══════ CONTRACT PAGE 3: §4 + §5 + §6 ═══════ */}
-      <Page size="A4" style={styles.page}>
-        <Header right={`Umowa nr ${d.contractNumber}`} />
+        {/* ─── §4 ─── */}
         <Text style={styles.sectionTitle}>§ 4. GWARANCJE</Text>
         <Text style={styles.paragraph}>
           1. Poszczególne komponenty objęte są gwarancją producentów zgodnie z kartami gwarancyjnymi.
@@ -315,6 +328,7 @@ export function CombinedPDF({ data }: { data: ContractData }) {
           4. Zgłoszenia serwisowe: serwis@nexbe.pl lub tel. +48 732 080 101.
         </Text>
 
+        {/* ─── §5 ─── */}
         <Text style={styles.sectionTitle}>§ 5. OBOWIĄZKI ZAMAWIAJĄCEGO</Text>
         <Text style={styles.paragraph}>1. Zamawiający zobowiązuje się w szczególności do:</Text>
         <View style={styles.indent}>
@@ -336,6 +350,7 @@ export function CombinedPDF({ data }: { data: ContractData }) {
           zgodnie z obowiązującymi przepisami.
         </Text>
 
+        {/* ─── §6 ─── */}
         <Text style={styles.sectionTitle}>§ 6. ODSTĄPIENIE OD UMOWY</Text>
         <Text style={styles.paragraph}>
           1. Każda ze Stron może odstąpić od Umowy za zapłatą odstępnego w wysokości
@@ -352,13 +367,7 @@ export function CombinedPDF({ data }: { data: ContractData }) {
           w stanie kompletnym w terminie 14 dni oraz zapłacić za prace wykonane.
         </Text>
 
-        <FooterComponent />
-        <PageNum />
-      </Page>
-
-      {/* ═══════ CONTRACT PAGE 4: §7 + Signatures ═══════ */}
-      <Page size="A4" style={styles.page}>
-        <Header right={`Umowa nr ${d.contractNumber}`} />
+        {/* ─── §7 ─── */}
         <Text style={styles.sectionTitle}>§ 7. POSTANOWIENIA KOŃCOWE</Text>
         <Text style={styles.paragraph}>
           1. Przeniesienie praw/obowiązków wymaga uprzedniej zgody drugiej Strony.
@@ -394,11 +403,25 @@ export function CombinedPDF({ data }: { data: ContractData }) {
           (lub w formie elektronicznej za pośrednictwem Autenti).
         </Text>
 
+        {/* Additional notes */}
+        {d.additionalNotes && (
+          <View style={[styles.highlightBox, { marginTop: 10 }]}>
+            <Text style={[styles.paragraph, { fontFamily: 'Roboto-Bold', marginBottom: 2 }]}>
+              Uwagi dodatkowe:
+            </Text>
+            <Text style={styles.paragraph}>{d.additionalNotes}</Text>
+          </View>
+        )}
+
+        {/* ─── Signatures ─── */}
         <View style={styles.signatureRow}>
           <View style={styles.signatureBox}>
             <Text style={styles.signatureLine}>Wykonawca</Text>
             <Text style={{ fontSize: 8, color: '#999', marginTop: 3 }}>
-              Zarząd Nexbe sp. z o.o.
+              {salesRepName}
+            </Text>
+            <Text style={{ fontSize: 7, color: '#bbb', marginTop: 1 }}>
+              Nexbe sp. z o.o.
             </Text>
           </View>
           <View style={styles.signatureBox}>
@@ -415,7 +438,7 @@ export function CombinedPDF({ data }: { data: ContractData }) {
 
       {/* ═══════ ATTACHMENT: POA OSD (Załącznik nr 2) ═══════ */}
       {d.attachments?.poaOSD && (
-        <Page size="A4" style={styles.page}>
+        <Page size="A4" style={styles.page} wrap>
           <Header right={`Załącznik nr 2 do Umowy ${d.contractNumber}`} />
 
           <Text style={[styles.title, { marginBottom: 20 }]}>PEŁNOMOCNICTWO</Text>
@@ -438,7 +461,7 @@ export function CombinedPDF({ data }: { data: ContractData }) {
             Nexbe sp. z o.o., ul. Stefana Batorego 18/108, 02-591 Warszawa, NIP 7011261848, KRS 0001174829
           </Text>
           <Text style={styles.paragraph}>
-            reprezentowanej przez Zarząd Spółki
+            reprezentowanej przez: {salesRepName} — {salesRepPosition}, na podstawie pełnomocnictwa udzielonego przez Zarząd Spółki
           </Text>
 
           <Text style={[styles.paragraph, { marginTop: 12 }]}>
@@ -494,7 +517,7 @@ export function CombinedPDF({ data }: { data: ContractData }) {
 
       {/* ═══════ ATTACHMENT: POA Subsidy (Załącznik nr 3) ═══════ */}
       {d.attachments?.poaSubsidy && (
-        <Page size="A4" style={styles.page}>
+        <Page size="A4" style={styles.page} wrap>
           <Header right={`Załącznik nr 3 do Umowy ${d.contractNumber}`} />
 
           <Text style={[styles.title, { marginBottom: 20 }]}>PEŁNOMOCNICTWO</Text>
@@ -517,7 +540,7 @@ export function CombinedPDF({ data }: { data: ContractData }) {
             Nexbe sp. z o.o., ul. Stefana Batorego 18/108, 02-591 Warszawa, NIP 7011261848, KRS 0001174829
           </Text>
           <Text style={styles.paragraph}>
-            reprezentowanej przez Zarząd Spółki
+            reprezentowanej przez: {salesRepName} — {salesRepPosition}, na podstawie pełnomocnictwa udzielonego przez Zarząd Spółki
           </Text>
 
           <Text style={[styles.paragraph, { marginTop: 12 }]}>
@@ -581,7 +604,7 @@ export function CombinedPDF({ data }: { data: ContractData }) {
       )}
 
       {/* ═══════ ATTACHMENT: RODO (Załącznik nr 4) ═══════ */}
-      <Page size="A4" style={styles.page}>
+      <Page size="A4" style={styles.page} wrap>
         <Header right={`Załącznik nr 4 do Umowy ${d.contractNumber}`} />
 
         <Text style={[styles.title, { marginBottom: 20 }]}>KLAUZULA INFORMACYJNA RODO</Text>
@@ -590,7 +613,7 @@ export function CombinedPDF({ data }: { data: ContractData }) {
           Zgodnie z art. 13 ust. 1 i 2 Rozporządzenia Parlamentu Europejskiego i Rady (UE) 2016/679
           z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem
           danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy
-          95/46/WE (ogólne rozporządzenie o ochronie danych, dalej „RODO"), informujemy, że:
+          95/46/WE (ogólne rozporządzenie o ochronie danych, dalej \u201eRODO\u201d), informujemy, że:
         </Text>
 
         <Text style={[styles.paragraphBold, { marginTop: 12 }]}>1. Administrator danych osobowych</Text>

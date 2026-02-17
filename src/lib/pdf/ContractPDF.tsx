@@ -43,7 +43,7 @@ export function ContractPDF({ data }: Props) {
       <Page size="A4" style={styles.page}>
         {/* Header */}
         <View style={styles.header}>
-          <Image src={`data:image/png;base64,${logoWhiteBase64}`} style={{ width: 90, height: 28 }} />
+          <Image src={logoWhiteBase64} style={{ width: 90, height: 28 }} />
           <View style={styles.headerRight}>
             <Text>Umowa nr {d.contractNumber}</Text>
             <Text>{formatDatePolish(d.contractDate)}</Text>

@@ -136,6 +136,15 @@ export interface ContractData {
 
   // Handlowiec
   salesRep: SalesRep;
+
+  // Dodatkowe pola edytowalne
+  meterOwner?: {
+    fullName: string;
+    pesel?: string;
+    address?: Address;
+  };
+  ppeNumber?: string;
+  additionalNotes?: string;
 }
 
 // Dla dashboardu — podsumowanie umowy
