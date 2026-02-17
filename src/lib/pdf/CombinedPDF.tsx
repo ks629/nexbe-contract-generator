@@ -7,50 +7,63 @@ import { robotoRegularBase64 } from '@/lib/fonts/roboto-regular';
 import { robotoBoldBase64 } from '@/lib/fonts/roboto-bold';
 import { logoWhiteBase64 } from '@/lib/fonts/logo-white-base64';
 
-// Register fonts
-Font.register({
-  family: 'Roboto',
-  src: `data:font/truetype;base64,${robotoRegularBase64}`,
-});
-Font.register({
-  family: 'Roboto-Bold',
-  src: `data:font/truetype;base64,${robotoBoldBase64}`,
-});
+// Register fonts (once)
+Font.register({ family: 'Roboto', src: `data:font/truetype;base64,${robotoRegularBase64}` });
+Font.register({ family: 'Roboto-Bold', src: `data:font/truetype;base64,${robotoBoldBase64}` });
 
 const NEXBE_FOOTER = 'Nexbe sp. z o.o. | ul. Stefana Batorego 18/108, 02-591 Warszawa | nexbe.pl | kontakt@nexbe.pl | +48 732 080 101';
 
-interface Props {
-  data: ContractData;
+function FooterComponent() {
+  return <Text style={styles.footer}>{NEXBE_FOOTER}</Text>;
 }
 
-function FooterComponent() {
+function PageNum() {
   return (
-    <Text style={styles.footer}>{NEXBE_FOOTER}</Text>
+    <Text
+      style={styles.pageNumber}
+      render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
+      fixed
+    />
   );
 }
 
-export function ContractPDF({ data }: Props) {
+function Header({ right }: { right: string }) {
+  return (
+    <View style={styles.header}>
+      <Image src={`data:image/png;base64,${logoWhiteBase64}`} style={{ width: 90, height: 28 }} />
+      <View style={styles.headerRight}>
+        <Text>{right}</Text>
+      </View>
+    </View>
+  );
+}
+
+function getSubsidyProgramName(program?: string): string {
+  switch (program) {
+    case 'MOJ_PRAD': return 'Program „Mój Prąd" (aktualna edycja)';
+    case 'CZYSTE_POWIETRZE': return 'Program „Czyste Powietrze"';
+    default: return 'Program dofinansowania NFOŚiGW';
+  }
+}
+
+// ═══════════════════════════════════════════════
+// Combined PDF — Contract + Attachments in one Document
+// ═══════════════════════════════════════════════
+export function CombinedPDF({ data }: { data: ContractData }) {
   const d = data;
   const inv = d.investmentAddress?.street ? d.investmentAddress : d.client?.address;
   const vatPercent = d.pricing?.vatRate || 8;
   const gross = d.pricing?.grossPrice || 0;
   const net = d.pricing?.netPrice || 0;
   const vat = d.pricing?.vatAmount || 0;
+  const osdName = d.existingPV?.osd ? getOSDName(d.existingPV.osd) : '_______________';
 
   return (
     <Document>
-      {/* ═══════ PAGE 1: Header + Parties + §1 ═══════ */}
+      {/* ═══════ CONTRACT PAGE 1 ═══════ */}
       <Page size="A4" style={styles.page}>
-        {/* Header */}
-        <View style={styles.header}>
-          <Image src={`data:image/png;base64,${logoWhiteBase64}`} style={{ width: 90, height: 28 }} />
-          <View style={styles.headerRight}>
-            <Text>Umowa nr {d.contractNumber}</Text>
-            <Text>{formatDatePolish(d.contractDate)}</Text>
-          </View>
-        </View>
+        <Header right={`Umowa nr ${d.contractNumber}\n${formatDatePolish(d.contractDate)}`} />
 
-        {/* Title */}
         <Text style={styles.title}>UMOWA NUMER {d.contractNumber}</Text>
         <Text style={styles.subtitle}>
           NA ROZBUDOWĘ INSTALACJI FOTOWOLTAICZNEJ O MAGAZYN ENERGII Z FALOWNIKIEM HYBRYDOWYM
@@ -60,7 +73,6 @@ export function ContractPDF({ data }: Props) {
           zawarta w dniu {formatDatePolish(d.contractDate)} w {d.contractCity || 'Warszawie'} pomiędzy:
         </Text>
 
-        {/* Wykonawca */}
         <Text style={styles.partyHeader}>WYKONAWCA:</Text>
         <Text style={styles.paragraph}>
           Nexbe spółka z ograniczoną odpowiedzialnością z siedzibą w Warszawie
@@ -73,7 +85,6 @@ export function ContractPDF({ data }: Props) {
 
         <Text style={[styles.paragraph, { textAlign: 'center', marginVertical: 6 }]}>a</Text>
 
-        {/* Zamawiający */}
         <Text style={styles.partyHeader}>ZAMAWIAJĄCY:</Text>
         <Text style={styles.paragraph}>
           {d.client?.fullName || '_______________'},{' '}
@@ -98,7 +109,6 @@ export function ContractPDF({ data }: Props) {
           bądź każde osobno „Stroną".
         </Text>
 
-        {/* §1 */}
         <Text style={styles.sectionTitle}>§ 1. PRZEDMIOT UMOWY</Text>
 
         <Text style={styles.paragraph}>
@@ -123,7 +133,7 @@ export function ContractPDF({ data }: Props) {
           5. Wykonawca zobowiązuje się do dostarczenia i montażu następującego zestawu
           wybranego przez Zamawiającego:
         </Text>
-        <View style={styles.indent}>
+        <View style={styles.highlightBox}>
           <Text style={styles.paragraph}>a. Magazyn energii: {d.product?.brand} {d.product?.model} ({d.product?.batteryCapacity_kWh} kWh)</Text>
           <Text style={styles.paragraph}>b. Falownik hybrydowy: {d.product?.inverterModel} ({d.product?.inverterPower_kW} kW)</Text>
           <Text style={styles.paragraph}>c. System zarządzania energią: {d.product?.ems || 'KENO EMS'}</Text>
@@ -157,11 +167,12 @@ export function ContractPDF({ data }: Props) {
         </View>
 
         <FooterComponent />
-        <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} fixed />
+        <PageNum />
       </Page>
 
-      {/* ═══════ PAGE 2: §2 + §3 ═══════ */}
+      {/* ═══════ CONTRACT PAGE 2: §2 + §3 ═══════ */}
       <Page size="A4" style={styles.page}>
+        <Header right={`Umowa nr ${d.contractNumber}`} />
         <Text style={styles.sectionTitle}>§ 2. WYNAGRODZENIE</Text>
 
         <Text style={styles.paragraph}>
@@ -277,11 +288,12 @@ export function ContractPDF({ data }: Props) {
         </Text>
 
         <FooterComponent />
-        <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} fixed />
+        <PageNum />
       </Page>
 
-      {/* ═══════ PAGE 3: §4 + §5 + §6 + §7 ═══════ */}
+      {/* ═══════ CONTRACT PAGE 3: §4 + §5 + §6 ═══════ */}
       <Page size="A4" style={styles.page}>
+        <Header right={`Umowa nr ${d.contractNumber}`} />
         <Text style={styles.sectionTitle}>§ 4. GWARANCJE</Text>
         <Text style={styles.paragraph}>
           1. Poszczególne komponenty objęte są gwarancją producentów zgodnie z kartami gwarancyjnymi.
@@ -341,11 +353,12 @@ export function ContractPDF({ data }: Props) {
         </Text>
 
         <FooterComponent />
-        <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} fixed />
+        <PageNum />
       </Page>
 
-      {/* ═══════ PAGE 4: §7 + Signatures ═══════ */}
+      {/* ═══════ CONTRACT PAGE 4: §7 + Signatures ═══════ */}
       <Page size="A4" style={styles.page}>
+        <Header right={`Umowa nr ${d.contractNumber}`} />
         <Text style={styles.sectionTitle}>§ 7. POSTANOWIENIA KOŃCOWE</Text>
         <Text style={styles.paragraph}>
           1. Przeniesienie praw/obowiązków wymaga uprzedniej zgody drugiej Strony.
@@ -381,7 +394,6 @@ export function ContractPDF({ data }: Props) {
           (lub w formie elektronicznej za pośrednictwem Autenti).
         </Text>
 
-        {/* Signatures */}
         <View style={styles.signatureRow}>
           <View style={styles.signatureBox}>
             <Text style={styles.signatureLine}>Wykonawca</Text>
@@ -398,7 +410,240 @@ export function ContractPDF({ data }: Props) {
         </View>
 
         <FooterComponent />
-        <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} fixed />
+        <PageNum />
+      </Page>
+
+      {/* ═══════ ATTACHMENT: POA OSD (Załącznik nr 2) ═══════ */}
+      {d.attachments?.poaOSD && (
+        <Page size="A4" style={styles.page}>
+          <Header right={`Załącznik nr 2 do Umowy ${d.contractNumber}`} />
+
+          <Text style={[styles.title, { marginBottom: 20 }]}>PEŁNOMOCNICTWO</Text>
+          <Text style={[styles.subtitle, { marginBottom: 5 }]}>
+            do zgłoszenia przyłączenia/aktualizacji zgłoszenia mikroinstalacji
+          </Text>
+
+          <Text style={[styles.paragraph, { marginTop: 15 }]}>Ja niżej podpisany/a:</Text>
+
+          <View style={[styles.indent, { marginTop: 10, marginBottom: 15 }]}>
+            <View style={styles.row}><Text style={styles.label}>Imię i nazwisko:</Text><Text style={styles.value}>{d.client?.fullName || '_______________'}</Text></View>
+            <View style={styles.row}><Text style={styles.label}>PESEL:</Text><Text style={styles.value}>{d.client?.pesel || '_______________'}</Text></View>
+            <View style={styles.row}><Text style={styles.label}>Adres:</Text><Text style={styles.value}>{d.client?.address?.street}, {d.client?.address?.postalCode} {d.client?.address?.city}</Text></View>
+            <View style={styles.row}><Text style={styles.label}>Nr telefonu:</Text><Text style={styles.value}>{d.client?.phone || '_______________'}</Text></View>
+            <View style={styles.row}><Text style={styles.label}>E-mail:</Text><Text style={styles.value}>{d.client?.email || '_______________'}</Text></View>
+          </View>
+
+          <Text style={styles.paragraph}>niniejszym udzielam pełnomocnictwa firmie:</Text>
+          <Text style={[styles.paragraphBold, { marginVertical: 8 }]}>
+            Nexbe sp. z o.o., ul. Stefana Batorego 18/108, 02-591 Warszawa, NIP 7011261848, KRS 0001174829
+          </Text>
+          <Text style={styles.paragraph}>
+            reprezentowanej przez Zarząd Spółki
+          </Text>
+
+          <Text style={[styles.paragraph, { marginTop: 12 }]}>
+            do działania w moim imieniu i na moją rzecz w zakresie:
+          </Text>
+
+          <View style={[styles.indent, { marginTop: 8 }]}>
+            <Text style={styles.paragraph}>
+              1. Złożenia zgłoszenia przyłączenia/aktualizacji zgłoszenia mikroinstalacji
+              do sieci elektroenergetycznej u właściwego Operatora Systemu Dystrybucyjnego (OSD):
+            </Text>
+            <Text style={[styles.paragraphBold, styles.indent]}>{osdName}</Text>
+
+            {d.existingPV?.needsPowerIncrease && (
+              <Text style={styles.paragraph}>
+                2. Złożenia wniosku o zwiększenie mocy przyłączeniowej z obecnej{' '}
+                {d.existingPV.currentConnectionPower_kW || '___'} kW do{' '}
+                {d.existingPV.targetConnectionPower_kW || '___'} kW.
+              </Text>
+            )}
+
+            <Text style={styles.paragraph}>
+              {d.existingPV?.needsPowerIncrease ? '3' : '2'}. Podpisywania w moim imieniu wszelkich dokumentów, wniosków, oświadczeń
+              i formularzy niezbędnych do realizacji powyższych czynności.
+            </Text>
+            <Text style={styles.paragraph}>
+              {d.existingPV?.needsPowerIncrease ? '4' : '3'}. Odbioru wszelkiej korespondencji związanej z powyższymi sprawami.
+            </Text>
+          </View>
+
+          <Text style={[styles.paragraph, { marginTop: 15 }]}>
+            Pełnomocnictwo jest ważne od dnia podpisania do dnia zakończenia procedury
+            przyłączeniowej, nie dłużej jednak niż 12 miesięcy od daty udzielenia.
+          </Text>
+          <Text style={styles.paragraph}>
+            Pełnomocnictwo obejmuje prawo do udzielania dalszych pełnomocnictw (substytucji).
+          </Text>
+
+          <View style={styles.signatureRow}>
+            <View style={styles.signatureBox}>
+              <Text style={styles.signatureLine}>Miejscowość, data</Text>
+            </View>
+            <View style={styles.signatureBox}>
+              <Text style={styles.signatureLine}>Podpis Mocodawcy</Text>
+              <Text style={{ fontSize: 7, color: '#999', marginTop: 3 }}>{d.client?.fullName}</Text>
+            </View>
+          </View>
+
+          <FooterComponent />
+          <PageNum />
+        </Page>
+      )}
+
+      {/* ═══════ ATTACHMENT: POA Subsidy (Załącznik nr 3) ═══════ */}
+      {d.attachments?.poaSubsidy && (
+        <Page size="A4" style={styles.page}>
+          <Header right={`Załącznik nr 3 do Umowy ${d.contractNumber}`} />
+
+          <Text style={[styles.title, { marginBottom: 20 }]}>PEŁNOMOCNICTWO</Text>
+          <Text style={[styles.subtitle, { marginBottom: 5 }]}>
+            do złożenia wniosku o dofinansowanie NFOŚiGW
+          </Text>
+
+          <Text style={[styles.paragraph, { marginTop: 15 }]}>Ja niżej podpisany/a:</Text>
+
+          <View style={[styles.indent, { marginTop: 10, marginBottom: 15 }]}>
+            <View style={styles.row}><Text style={styles.label}>Imię i nazwisko:</Text><Text style={styles.value}>{d.client?.fullName || '_______________'}</Text></View>
+            <View style={styles.row}><Text style={styles.label}>PESEL:</Text><Text style={styles.value}>{d.client?.pesel || '_______________'}</Text></View>
+            <View style={styles.row}><Text style={styles.label}>Adres:</Text><Text style={styles.value}>{d.client?.address?.street}, {d.client?.address?.postalCode} {d.client?.address?.city}</Text></View>
+            <View style={styles.row}><Text style={styles.label}>Nr telefonu:</Text><Text style={styles.value}>{d.client?.phone || '_______________'}</Text></View>
+            <View style={styles.row}><Text style={styles.label}>E-mail:</Text><Text style={styles.value}>{d.client?.email || '_______________'}</Text></View>
+          </View>
+
+          <Text style={styles.paragraph}>niniejszym udzielam pełnomocnictwa firmie:</Text>
+          <Text style={[styles.paragraphBold, { marginVertical: 8 }]}>
+            Nexbe sp. z o.o., ul. Stefana Batorego 18/108, 02-591 Warszawa, NIP 7011261848, KRS 0001174829
+          </Text>
+          <Text style={styles.paragraph}>
+            reprezentowanej przez Zarząd Spółki
+          </Text>
+
+          <Text style={[styles.paragraph, { marginTop: 12 }]}>
+            do działania w moim imieniu i na moją rzecz w zakresie:
+          </Text>
+
+          <View style={[styles.indent, { marginTop: 8 }]}>
+            <Text style={styles.paragraph}>
+              1. Złożenia wniosku o dofinansowanie w ramach programów
+              Narodowego Funduszu Ochrony Środowiska i Gospodarki Wodnej (NFOŚiGW):
+            </Text>
+            <Text style={[styles.paragraphBold, styles.indent]}>
+              {getSubsidyProgramName(d.attachments?.subsidyProgram)}
+            </Text>
+
+            <Text style={styles.paragraph}>
+              2. Przygotowania i złożenia kompletnej dokumentacji wymaganej
+              przez w/w program dofinansowania.
+            </Text>
+            <Text style={styles.paragraph}>
+              3. Prowadzenia korespondencji z NFOŚiGW oraz WFOŚiGW
+              w zakresie złożonego wniosku.
+            </Text>
+            <Text style={styles.paragraph}>
+              4. Uzupełniania i korygowania dokumentacji wniosku
+              na wezwanie instytucji udzielającej dofinansowania.
+            </Text>
+            <Text style={styles.paragraph}>
+              5. Odbioru wszelkiej korespondencji związanej z wnioskiem o dofinansowanie.
+            </Text>
+          </View>
+
+          <View style={[styles.warningBox, { marginTop: 15 }]}>
+            <Text style={[styles.paragraph, { fontFamily: 'Roboto-Bold', marginBottom: 0 }]}>
+              Pełnomocnictwo NIE obejmuje odbioru środków z dofinansowania — środki wypłacane
+              są bezpośrednio na rachunek bankowy Mocodawcy.
+            </Text>
+          </View>
+
+          <Text style={[styles.paragraph, { marginTop: 8 }]}>
+            Pełnomocnictwo jest ważne od dnia podpisania do dnia zakończenia procedury
+            rozliczenia dofinansowania, nie dłużej jednak niż 24 miesiące od daty udzielenia.
+          </Text>
+          <Text style={styles.paragraph}>
+            Pełnomocnictwo obejmuje prawo do udzielania dalszych pełnomocnictw (substytucji).
+          </Text>
+
+          <View style={styles.signatureRow}>
+            <View style={styles.signatureBox}>
+              <Text style={styles.signatureLine}>Miejscowość, data</Text>
+            </View>
+            <View style={styles.signatureBox}>
+              <Text style={styles.signatureLine}>Podpis Mocodawcy</Text>
+              <Text style={{ fontSize: 7, color: '#999', marginTop: 3 }}>{d.client?.fullName}</Text>
+            </View>
+          </View>
+
+          <FooterComponent />
+          <PageNum />
+        </Page>
+      )}
+
+      {/* ═══════ ATTACHMENT: RODO (Załącznik nr 4) ═══════ */}
+      <Page size="A4" style={styles.page}>
+        <Header right={`Załącznik nr 4 do Umowy ${d.contractNumber}`} />
+
+        <Text style={[styles.title, { marginBottom: 20 }]}>KLAUZULA INFORMACYJNA RODO</Text>
+
+        <Text style={styles.paragraph}>
+          Zgodnie z art. 13 ust. 1 i 2 Rozporządzenia Parlamentu Europejskiego i Rady (UE) 2016/679
+          z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem
+          danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy
+          95/46/WE (ogólne rozporządzenie o ochronie danych, dalej „RODO"), informujemy, że:
+        </Text>
+
+        <Text style={[styles.paragraphBold, { marginTop: 12 }]}>1. Administrator danych osobowych</Text>
+        <Text style={styles.paragraph}>
+          Administratorem Pani/Pana danych osobowych jest Nexbe sp. z o.o. z siedzibą w Warszawie,
+          ul. Stefana Batorego 18/108, 02-591 Warszawa, KRS 0001174829, NIP 7011261848.
+          Kontakt: rodo@nexbe.pl.
+        </Text>
+
+        <Text style={[styles.paragraphBold, { marginTop: 8 }]}>2. Cel i podstawa przetwarzania</Text>
+        <Text style={styles.paragraph}>
+          Pani/Pana dane osobowe przetwarzane będą w celu:
+        </Text>
+        <View style={styles.indent}>
+          <Text style={styles.paragraph}>a) realizacji Umowy — na podstawie art. 6 ust. 1 lit. b) RODO;</Text>
+          <Text style={styles.paragraph}>b) wypełnienia obowiązków prawnych ciążących na Administratorze — na podstawie art. 6 ust. 1 lit. c) RODO;</Text>
+          <Text style={styles.paragraph}>c) realizacji prawnie uzasadnionych interesów Administratora (dochodzenie roszczeń) — na podstawie art. 6 ust. 1 lit. f) RODO.</Text>
+        </View>
+
+        <Text style={[styles.paragraphBold, { marginTop: 8 }]}>3. Odbiorcy danych</Text>
+        <Text style={styles.paragraph}>
+          Odbiorcami danych mogą być: podwykonawcy realizujący montaż, operatorzy systemów
+          dystrybucyjnych (OSD), instytucje finansujące (NFOŚiGW, WFOŚiGW), podmioty świadczące
+          usługi IT, księgowe i prawne na rzecz Administratora.
+        </Text>
+
+        <Text style={[styles.paragraphBold, { marginTop: 8 }]}>4. Okres przechowywania</Text>
+        <Text style={styles.paragraph}>
+          Dane będą przechowywane przez okres realizacji Umowy, a następnie przez okres wymagany
+          przepisami prawa podatkowego i okres przedawnienia roszczeń.
+        </Text>
+
+        <Text style={[styles.paragraphBold, { marginTop: 8 }]}>5. Prawa osoby, której dane dotyczą</Text>
+        <Text style={styles.paragraph}>
+          Przysługuje Pani/Panu prawo do: dostępu do danych, sprostowania, usunięcia,
+          ograniczenia przetwarzania, przenoszenia danych, wniesienia sprzeciwu wobec przetwarzania,
+          a także prawo wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (PUODO).
+        </Text>
+
+        <Text style={[styles.paragraphBold, { marginTop: 8 }]}>6. Informacja o wymogu podania danych</Text>
+        <Text style={styles.paragraph}>
+          Podanie danych osobowych jest dobrowolne, lecz niezbędne do zawarcia i realizacji Umowy.
+          Brak podania danych uniemożliwi zawarcie Umowy.
+        </Text>
+
+        <Text style={[styles.paragraphBold, { marginTop: 8 }]}>7. Kontakt</Text>
+        <Text style={styles.paragraph}>
+          W sprawach dotyczących przetwarzania danych osobowych prosimy o kontakt:
+          rodo@nexbe.pl lub pisemnie na adres siedziby Administratora.
+        </Text>
+
+        <FooterComponent />
+        <PageNum />
       </Page>
     </Document>
   );

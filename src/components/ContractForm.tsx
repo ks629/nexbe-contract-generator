@@ -505,26 +505,73 @@ function StepPricing({ contractData, onPriceChange, onVatChange, updateField }: 
         vatRate={pricing.vatRate}
         value={pricing.contractPrice}
         onChange={onPriceChange}
+        financing={pricing.financing}
       />
 
       {/* Financing */}
       <div className="space-y-3">
-        <Label className="text-xs text-white/50 uppercase tracking-wide">Finansowanie</Label>
+        <Label className="text-xs text-white/50 uppercase tracking-wide">Forma płatności</Label>
         <RadioGroup
           value={pricing.financing}
-          onValueChange={(v) => updateField('pricing.financing', v)}
-          className="flex gap-4"
+          onValueChange={(v) => {
+            updateField('pricing.financing', v);
+            if (v === 'OWN_FUNDS') {
+              updateField('pricing.ownContribution', 0);
+              updateField('pricing.financingInstitution', '');
+            }
+          }}
+          className="flex flex-col gap-3"
         >
-          <div className="flex items-center space-x-2">
+          <div className="flex items-start space-x-3 rounded-lg bg-white/5 border border-white/10 p-3">
             <RadioGroupItem value="OWN_FUNDS" id="own" />
-            <label htmlFor="own" className="text-sm text-white/80 cursor-pointer">Środki własne</label>
+            <label htmlFor="own" className="text-sm text-white/80 cursor-pointer">
+              <strong>Gotówka (środki własne)</strong>
+              <p className="text-xs text-white/40 mt-0.5">Płatność w 3 transzach: 30% / 60% / 10%</p>
+            </label>
           </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="OTHER" id="other" />
-            <label htmlFor="other" className="text-sm text-white/80 cursor-pointer">Inne źródła (kredyt, leasing)</label>
+          <div className="flex items-start space-x-3 rounded-lg bg-white/5 border border-white/10 p-3">
+            <RadioGroupItem value="CREDIT" id="credit" />
+            <label htmlFor="credit" className="text-sm text-white/80 cursor-pointer">
+              <strong>Kredyt bankowy</strong>
+              <p className="text-xs text-white/40 mt-0.5">Płatność przez bank kredytujący</p>
+            </label>
+          </div>
+          <div className="flex items-start space-x-3 rounded-lg bg-white/5 border border-white/10 p-3">
+            <RadioGroupItem value="LEASING" id="leasing" />
+            <label htmlFor="leasing" className="text-sm text-white/80 cursor-pointer">
+              <strong>Leasing</strong>
+              <p className="text-xs text-white/40 mt-0.5">Płatność przez firmę leasingową</p>
+            </label>
           </div>
         </RadioGroup>
       </div>
+
+      {/* Own Contribution — for credit/leasing */}
+      {(pricing.financing === 'CREDIT' || pricing.financing === 'LEASING') && (
+        <div className="space-y-4 pl-4 border-l-2 border-[#B5005D]/30">
+          <FieldRow label="Wkład własny (brutto, zł) — opcjonalnie">
+            <Input
+              type="number"
+              value={pricing.ownContribution || ''}
+              onChange={(e) => updateField('pricing.ownContribution', parseFloat(e.target.value) || 0)}
+              placeholder="0"
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/30 w-48"
+            />
+          </FieldRow>
+          <FieldRow label="Nazwa instytucji finansującej (opcjonalnie)">
+            <Input
+              type="text"
+              value={pricing.financingInstitution || ''}
+              onChange={(e) => updateField('pricing.financingInstitution', e.target.value)}
+              placeholder={pricing.financing === 'CREDIT' ? 'np. PKO BP, mBank' : 'np. PKO Leasing'}
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/30 w-64"
+            />
+          </FieldRow>
+          <p className="text-xs text-white/30">
+            Pozostała kwota ({formatPLN(pricing.grossPrice - (pricing.ownContribution || 0))}) zostanie opłacona przez instytucję finansującą.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

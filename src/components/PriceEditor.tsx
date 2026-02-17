@@ -13,9 +13,10 @@ interface PriceEditorProps {
   vatRate: 8 | 23;
   onChange: (price: number) => void;
   value?: number;
+  financing?: string;
 }
 
-export default function PriceEditor({ offerPrice, vatRate, onChange, value }: PriceEditorProps) {
+export default function PriceEditor({ offerPrice, vatRate, onChange, value, financing = 'OWN_FUNDS' }: PriceEditorProps) {
   const [contractPrice, setContractPrice] = useState(value || offerPrice);
   const [inputValue, setInputValue] = useState(String(value || offerPrice));
 
@@ -140,23 +141,35 @@ export default function PriceEditor({ offerPrice, vatRate, onChange, value }: Pr
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-3">
-          <p className="text-xs text-white/40 uppercase tracking-wide mb-2">Harmonogram płatności</p>
-          <div className="grid grid-cols-3 gap-4 text-sm">
-            <div>
-              <span className="text-white/40">Transza 1 (30%)</span>
-              <p className="font-medium text-white">{formatPLN(tranches.t1_amount)}</p>
-            </div>
-            <div>
-              <span className="text-white/40">Transza 2 (60%)</span>
-              <p className="font-medium text-white">{formatPLN(tranches.t2_amount)}</p>
-            </div>
-            <div>
-              <span className="text-white/40">Transza 3 (10%)</span>
-              <p className="font-medium text-white">{formatPLN(tranches.t3_amount)}</p>
+        {financing === 'OWN_FUNDS' && (
+          <div className="border-t border-white/10 pt-3">
+            <p className="text-xs text-white/40 uppercase tracking-wide mb-2">Harmonogram płatności (środki własne)</p>
+            <div className="grid grid-cols-3 gap-4 text-sm">
+              <div>
+                <span className="text-white/40">Transza 1 (30%)</span>
+                <p className="font-medium text-white">{formatPLN(tranches.t1_amount)}</p>
+              </div>
+              <div>
+                <span className="text-white/40">Transza 2 (60%)</span>
+                <p className="font-medium text-white">{formatPLN(tranches.t2_amount)}</p>
+              </div>
+              <div>
+                <span className="text-white/40">Transza 3 (10%)</span>
+                <p className="font-medium text-white">{formatPLN(tranches.t3_amount)}</p>
+              </div>
             </div>
           </div>
-        </div>
+        )}
+        {financing !== 'OWN_FUNDS' && (
+          <div className="border-t border-white/10 pt-3">
+            <p className="text-xs text-white/40 uppercase tracking-wide mb-2">
+              Płatność przez {financing === 'CREDIT' ? 'bank kredytujący' : 'firmę leasingową'}
+            </p>
+            <p className="text-sm text-white/60">
+              Kwota {formatPLN(contractPrice)} brutto zostanie opłacona przez instytucję finansującą.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

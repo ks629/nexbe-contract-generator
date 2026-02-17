@@ -130,7 +130,10 @@ function PreviewContent() {
               <p className="text-sm text-white/60">ul. Stefana Batorego 18/108</p>
               <p className="text-sm text-white/60">02-591 Warszawa</p>
               <p className="text-sm text-white/60 mt-1">NIP: 7011261848 | KRS: 0001174829</p>
-              <p className="text-sm text-white/60">Reprezentowana przez: {d.salesRep?.fullName}</p>
+              <p className="text-sm text-white/60">Reprezentowana przez: Zarząd Spółki</p>
+              {d.salesRep?.fullName && (
+                <p className="text-sm text-white/40">Handlowiec: {d.salesRep.fullName}</p>
+              )}
             </div>
             <div>
               <p className="text-xs text-white/40 uppercase mb-2">Zamawiający</p>
@@ -232,23 +235,40 @@ function PreviewContent() {
                 {formatPLN(d.pricing?.netPrice || 0)} netto + {d.pricing?.vatRate}% VAT ({formatPLN(d.pricing?.vatAmount || 0)})
               </p>
             </div>
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <div className="rounded-lg bg-white/5 p-3">
-                <p className="text-xs text-white/40">Transza 1 (30%)</p>
-                <p className="text-lg font-bold text-white">{formatPLN(d.pricing?.tranches?.t1_amount || 0)}</p>
-                <p className="text-xs text-white/30">3 dni od podpisania</p>
+            {d.pricing?.financing === 'OWN_FUNDS' ? (
+              <div className="grid grid-cols-3 gap-4 text-center">
+                <div className="rounded-lg bg-white/5 p-3">
+                  <p className="text-xs text-white/40">Transza 1 (30%)</p>
+                  <p className="text-lg font-bold text-white">{formatPLN(d.pricing?.tranches?.t1_amount || 0)}</p>
+                  <p className="text-xs text-white/30">3 dni od podpisania</p>
+                </div>
+                <div className="rounded-lg bg-white/5 p-3">
+                  <p className="text-xs text-white/40">Transza 2 (60%)</p>
+                  <p className="text-lg font-bold text-white">{formatPLN(d.pricing?.tranches?.t2_amount || 0)}</p>
+                  <p className="text-xs text-white/30">3 dni od dostawy</p>
+                </div>
+                <div className="rounded-lg bg-white/5 p-3">
+                  <p className="text-xs text-white/40">Transza 3 (10%)</p>
+                  <p className="text-lg font-bold text-white">{formatPLN(d.pricing?.tranches?.t3_amount || 0)}</p>
+                  <p className="text-xs text-white/30">3 dni po montażu</p>
+                </div>
               </div>
-              <div className="rounded-lg bg-white/5 p-3">
-                <p className="text-xs text-white/40">Transza 2 (60%)</p>
-                <p className="text-lg font-bold text-white">{formatPLN(d.pricing?.tranches?.t2_amount || 0)}</p>
-                <p className="text-xs text-white/30">3 dni od dostawy</p>
+            ) : (
+              <div className="rounded-lg bg-white/5 p-4 text-center">
+                <p className="text-sm text-white/60">
+                  Forma płatności: <span className="text-white font-medium">{d.pricing?.financing === 'CREDIT' ? 'Kredyt bankowy' : 'Leasing'}</span>
+                </p>
+                {d.pricing?.ownContribution && d.pricing.ownContribution > 0 && (
+                  <p className="text-sm text-white/60 mt-2">
+                    Wkład własny: <span className="text-white font-medium">{formatPLN(d.pricing.ownContribution)}</span>
+                  </p>
+                )}
+                <p className="text-xs text-white/30 mt-2">
+                  Płatność przez instytucję finansującą
+                  {d.pricing?.financingInstitution ? `: ${d.pricing.financingInstitution}` : ''}
+                </p>
               </div>
-              <div className="rounded-lg bg-white/5 p-3">
-                <p className="text-xs text-white/40">Transza 3 (10%)</p>
-                <p className="text-lg font-bold text-white">{formatPLN(d.pricing?.tranches?.t3_amount || 0)}</p>
-                <p className="text-xs text-white/30">3 dni po montażu</p>
-              </div>
-            </div>
+            )}
           </CardContent>
         </Card>
 

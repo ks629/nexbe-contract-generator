@@ -6,7 +6,7 @@ export type OSDOperator = 'PGE' | 'TAURON' | 'ENEA' | 'ENERGA' | 'STOEN' | 'INNY
 
 export type BuildingType = 'RESIDENTIAL_UNDER_300' | 'RESIDENTIAL_OVER_300' | 'NON_RESIDENTIAL';
 
-export type FinancingType = 'OWN_FUNDS' | 'OTHER';
+export type FinancingType = 'OWN_FUNDS' | 'CREDIT' | 'LEASING';
 
 export type MeetingType = 'SCHEDULED' | 'UNSCHEDULED' | 'REMOTE';
 
@@ -72,6 +72,8 @@ export interface Pricing {
   vatAmount: number;
   grossPrice: number;
   financing: FinancingType;
+  ownContribution?: number;
+  financingInstitution?: string;
   tranches: {
     t1_percent: 30;
     t1_amount: number;
