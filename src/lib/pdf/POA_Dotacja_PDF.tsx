@@ -4,7 +4,7 @@ import { ContractData } from '@/types/contract';
 import { styles } from './styles';
 import { robotoRegularBase64 } from '@/lib/fonts/roboto-regular';
 import { robotoBoldBase64 } from '@/lib/fonts/roboto-bold';
-import { logoWhiteBase64 } from '@/lib/fonts/logo-white-base64';
+import { logoGradientBase64 } from '@/lib/fonts/logo-gradient-base64';
 
 Font.register({ family: 'Roboto', src: `data:font/truetype;base64,${robotoRegularBase64}` });
 Font.register({ family: 'Roboto-Bold', src: `data:font/truetype;base64,${robotoBoldBase64}` });
@@ -26,7 +26,7 @@ export function POA_Dotacja_PDF({ data }: { data: ContractData }) {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
-          <Image src={`data:image/png;base64,${logoWhiteBase64}`} style={{ width: 90, height: 28 }} />
+          <Image src={logoGradientBase64} style={{ width: 90, height: 28 }} />
           <View style={styles.headerRight}>
             <Text>Załącznik nr 3 do Umowy {d.contractNumber}</Text>
           </View>

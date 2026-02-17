@@ -5,7 +5,7 @@ import { formatAmount, formatDatePolish, getOSDName } from '@/lib/contract-helpe
 import { styles } from './styles';
 import { robotoRegularBase64 } from '@/lib/fonts/roboto-regular';
 import { robotoBoldBase64 } from '@/lib/fonts/roboto-bold';
-import { logoWhiteBase64 } from '@/lib/fonts/logo-white-base64';
+import { logoGradientBase64 } from '@/lib/fonts/logo-gradient-base64';
 
 // Register fonts (once)
 Font.register({ family: 'Roboto', src: `data:font/truetype;base64,${robotoRegularBase64}` });
@@ -30,7 +30,7 @@ function PageNum() {
 function Header({ right }: { right: string }) {
   return (
     <View style={styles.header} fixed>
-      <Image src={logoWhiteBase64} style={{ width: 90, height: 28 }} />
+      <Image src={logoGradientBase64} style={{ width: 90, height: 28 }} />
       <View style={styles.headerRight}>
         <Text>{right}</Text>
       </View>

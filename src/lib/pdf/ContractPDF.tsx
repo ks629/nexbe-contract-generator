@@ -5,7 +5,7 @@ import { formatAmount, formatDatePolish, getOSDName } from '@/lib/contract-helpe
 import { styles } from './styles';
 import { robotoRegularBase64 } from '@/lib/fonts/roboto-regular';
 import { robotoBoldBase64 } from '@/lib/fonts/roboto-bold';
-import { logoWhiteBase64 } from '@/lib/fonts/logo-white-base64';
+import { logoGradientBase64 } from '@/lib/fonts/logo-gradient-base64';
 
 // Register fonts
 Font.register({
@@ -43,7 +43,7 @@ export function ContractPDF({ data }: Props) {
       <Page size="A4" style={styles.page}>
         {/* Header */}
         <View style={styles.header}>
-          <Image src={logoWhiteBase64} style={{ width: 90, height: 28 }} />
+          <Image src={logoGradientBase64} style={{ width: 90, height: 28 }} />
           <View style={styles.headerRight}>
             <Text>Umowa nr {d.contractNumber}</Text>
             <Text>{formatDatePolish(d.contractDate)}</Text>
