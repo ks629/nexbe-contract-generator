@@ -289,7 +289,7 @@ function PreviewContent() {
                   product: `${d.product?.brand} ${d.product?.model}`,
                   contract: d.contractNumber || '',
                 });
-                window.open(`https://konfigurator-delta.vercel.app?${params.toString()}`, '_blank');
+                window.open(`https://arkusz-montazowy.vercel.app?${params.toString()}`, '_blank');
               }}
             >
               <ExternalLink className="mr-2 h-4 w-4" />

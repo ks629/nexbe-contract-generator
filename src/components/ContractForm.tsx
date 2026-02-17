@@ -648,7 +648,7 @@ function StepAttachments({ getField, updateField }: StepProps) {
             variant="outline"
             size="sm"
             className="border-blue-500/30 text-blue-300 hover:bg-blue-500/10"
-            onClick={() => window.open('https://konfigurator-delta.vercel.app', '_blank')}
+            onClick={() => window.open('https://arkusz-montazowy.vercel.app', '_blank')}
           >
             <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
             Przejdź do AUM
