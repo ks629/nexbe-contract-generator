@@ -22,8 +22,8 @@
       "@/*": ["./src/*"],
       "@nexbe/nexbi": ["../shared/nexbi/index.ts"],
       "@nexbe/nexbi/*": ["../shared/nexbi/*"],
-      "@nexbe/icons": ["../shared/icons/index.ts"],
-      "@nexbe/icons/*": ["../shared/icons/*"]
+      "@nexbe/icons": ["./src/nexbe-icons/index.ts"],
+      "@nexbe/icons/*": ["./src/nexbe-icons/*"]
     }
   },
   "include": [
