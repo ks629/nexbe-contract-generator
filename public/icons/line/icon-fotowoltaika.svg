@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Fotowoltaika — panel słoneczny" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Fotowoltaika — panel słoneczny</title>
+  <!-- Sun -->
+  <circle cx="48" cy="14" r="6"/>
+  <line x1="48" y1="4" x2="48" y2="7"/>
+  <line x1="48" y1="21" x2="48" y2="24"/>
+  <line x1="38" y1="14" x2="41" y2="14"/>
+  <line x1="55" y1="14" x2="58" y2="14"/>
+  <line x1="41" y1="7" x2="43.5" y2="9.5"/>
+  <line x1="52.5" y1="18.5" x2="55" y2="21"/>
+  <!-- Solar panel (tilted) -->
+  <rect x="6" y="26" width="40" height="24" rx="2" transform="rotate(-8 26 38)"/>
+  <!-- Panel grid lines horizontal -->
+  <line x1="8" y1="34" x2="44" y2="29" opacity="0.6"/>
+  <line x1="10" y1="42" x2="46" y2="37" opacity="0.6"/>
+  <!-- Panel grid lines vertical -->
+  <line x1="19" y1="24" x2="17" y2="49" opacity="0.6"/>
+  <line x1="32" y1="22" x2="30" y2="47" opacity="0.6"/>
+  <!-- Stand -->
+  <line x1="26" y1="50" x2="26" y2="58"/>
+  <line x1="18" y1="58" x2="34" y2="58"/>
+</svg>

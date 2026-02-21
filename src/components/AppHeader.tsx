@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { FileText, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
+import { NexbeIcon } from '@nexbe/icons';
 import { Button } from '@/components/ui/button';
 
 export default function AppHeader() {
@@ -19,15 +20,15 @@ export default function AppHeader() {
             priority
           />
           <div className="hidden sm:flex items-center gap-2">
-            <span className="text-white/20">|</span>
-            <span className="text-sm font-medium text-white/60">Generator Umów</span>
+            <span className="text-white/50">|</span>
+            <span className="text-sm font-medium text-white/70">Generator Umów</span>
           </div>
         </Link>
 
         <nav className="flex items-center gap-2">
           <Link href="/">
             <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/5">
-              <FileText className="mr-2 h-4 w-4" />
+              <NexbeIcon name="dokumenty" size={16} variant="inherit" className="mr-2" />
               <span className="hidden sm:inline">Umowy</span>
             </Button>
           </Link>

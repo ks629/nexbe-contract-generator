@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Pojemność w kWh" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Pojemność w kWh</title>
+  <!-- Battery body -->
+  <rect x="14" y="10" width="36" height="46" rx="5"/>
+  <!-- Battery terminal -->
+  <rect x="26" y="4" width="12" height="6" rx="2"/>
+  <!-- Full charge segments -->
+  <rect x="20" y="40" width="24" height="8" rx="1.5"/>
+  <rect x="20" y="29" width="24" height="8" rx="1.5"/>
+  <rect x="20" y="18" width="24" height="8" rx="1.5"/>
+  <!-- kWh text -->
+  <text x="32" y="36" text-anchor="middle" fill="currentColor" font-family="sans-serif" font-size="9" font-weight="700" stroke="none">kWh</text>
+</svg>

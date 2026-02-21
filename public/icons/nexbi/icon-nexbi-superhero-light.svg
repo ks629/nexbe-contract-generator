@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbi-icon" aria-label="NEXBi superhero z peleryną">
+  <title>NEXBi superhero z peleryną</title>
+  <!-- Cape -->
+  <path d="M18,18 Q14,34 8,52 Q32,56 56,52 Q50,34 46,18Z" fill="#FF004E" opacity="0.7"/>
+  <path d="M19,18 Q16,32 12,48 Q32,52 52,48 Q48,32 45,18Z" fill="#FF2D55" opacity="0.35"/>
+  <!-- Antenna -->
+  <rect x="31" y="5" width="2" height="9" rx="1" fill="#8A35CC"/>
+  <circle cx="32" cy="4" r="2.5" fill="#FF004E"/>
+  <!-- Body -->
+  <rect x="19" y="14" width="26" height="34" rx="6" fill="#6B1A99"/>
+  <!-- Lightning bolt on chest -->
+  <polygon points="30,26 34,26 31,32 35,32 28,42 31,34 27,34" fill="#FFD700" opacity="0.8"/>
+  <!-- Mask -->
+  <path d="M20,23 Q26,20 32,23 Q38,20 44,23" fill="none" stroke="#FF004E" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Left eye -->
+  <rect x="23" y="24" width="7" height="8" rx="2.5" fill="#FF004E"/>
+  <circle cx="26.5" cy="27.5" r="1.5" fill="#fff"/>
+  <!-- Right eye -->
+  <rect x="34" y="24" width="7" height="8" rx="2.5" fill="#FF004E"/>
+  <circle cx="37.5" cy="27.5" r="1.5" fill="#fff"/>
+  <!-- Mouth proud -->
+  <path d="M27,36 Q32,40 37,36" fill="none" stroke="#FF004E" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Blush -->
+  <circle cx="22" cy="34" r="2" fill="#FF004E" opacity="0.2"/>
+  <circle cx="42" cy="34" r="2" fill="#FF004E" opacity="0.2"/>
+  <!-- Left arm (power pose) -->
+  <rect x="8" y="22" width="5" height="12" rx="2.5" fill="#6B1A99" transform="rotate(-30 10.5 28)"/>
+  <circle cx="5" cy="20" r="3.5" fill="#8A35CC"/>
+  <!-- Right arm (power pose) -->
+  <rect x="51" y="22" width="5" height="12" rx="2.5" fill="#6B1A99" transform="rotate(30 53.5 28)"/>
+  <circle cx="59" cy="20" r="3.5" fill="#8A35CC"/>
+  <!-- Left leg -->
+  <rect x="24" y="48" width="5" height="8" rx="2.5" fill="#5A1A8A"/>
+  <rect x="21" y="54" width="9" height="4" rx="2" fill="#6B1A99"/>
+  <!-- Right leg -->
+  <rect x="35" y="48" width="5" height="8" rx="2.5" fill="#5A1A8A"/>
+  <rect x="34" y="54" width="9" height="4" rx="2" fill="#6B1A99"/>
+</svg>

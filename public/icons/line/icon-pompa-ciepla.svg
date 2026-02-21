@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Pompa ciepła" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Pompa ciepła</title>
+  <!-- House outline -->
+  <path d="M8,32 L32,12 L56,32"/>
+  <rect x="14" y="32" width="36" height="24" rx="2"/>
+  <!-- Heat waves inside -->
+  <path d="M24,42 Q26,38 24,34" opacity="0.6"/>
+  <path d="M32,44 Q34,40 32,36" opacity="0.8"/>
+  <path d="M40,42 Q42,38 40,34" opacity="0.6"/>
+  <!-- Thermometer -->
+  <rect x="29" y="46" width="6" height="8" rx="3"/>
+  <circle cx="32" cy="52" r="2"/>
+</svg>

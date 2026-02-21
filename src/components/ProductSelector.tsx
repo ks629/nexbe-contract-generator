@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Battery, Zap, Shield } from 'lucide-react';
+import { NexbeIcon } from '@nexbe/icons';
 
 interface ProductSelectorProps {
   selectedProductId?: string;
@@ -63,7 +63,7 @@ export default function ProductSelector({ selectedProductId, backupEPS = true, o
               onCheckedChange={(checked) => handleBackupChange(checked === true)}
             />
             <label htmlFor="backup" className="text-sm text-white/80 cursor-pointer flex items-center gap-2">
-              <Shield className="h-4 w-4 text-green-400" />
+              <NexbeIcon name="blackout-ochrona" size={16} variant="inherit" className="text-green-400" />
               Pełny backup 3F (SZR)
             </label>
           </div>
@@ -100,11 +100,11 @@ export default function ProductSelector({ selectedProductId, backupEPS = true, o
 
               <div className="flex gap-3 mb-3">
                 <div className="flex items-center gap-1.5 text-xs text-white/60">
-                  <Battery className="h-3.5 w-3.5 text-green-400" />
+                  <NexbeIcon name="magazyn-energii" size={14} variant="inherit" className="text-green-400" />
                   {product.batteryCapacity_kWh} kWh
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-white/60">
-                  <Zap className="h-3.5 w-3.5 text-amber-400" />
+                  <NexbeIcon name="smart-ems" size={14} variant="inherit" className="text-amber-400" />
                   {product.inverterPower_kW} kW
                 </div>
               </div>

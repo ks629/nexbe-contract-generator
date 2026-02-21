@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbi-icon" aria-label="NEXBi z kluczem i lupą — serwis">
+  <title>NEXBi z kluczem i lupą — serwis</title>
+  <!-- Hard hat (engineer) -->
+  <ellipse cx="32" cy="14" rx="16" ry="5" fill="#FFB800"/>
+  <rect x="18" y="10" width="28" height="5" rx="2" fill="#FFB800"/>
+  <rect x="22" y="7" width="20" height="5" rx="3" fill="#FF8C00"/>
+  <circle cx="32" cy="5" r="2.5" fill="#FF004E"/>
+  <!-- Body -->
+  <rect x="19" y="18" width="26" height="32" rx="6" fill="#350066"/>
+  <!-- Left eye (curious) -->
+  <rect x="23" y="24" width="7" height="9" rx="2.5" fill="#FF004E"/>
+  <circle cx="26.5" cy="28.5" r="1.5" fill="#fff"/>
+  <!-- Right eye (curious) -->
+  <rect x="34" y="25" width="7" height="9" rx="2.5" fill="#FF004E"/>
+  <circle cx="37.5" cy="28.5" r="1.5" fill="#fff"/>
+  <!-- Mouth curious -->
+  <path d="M28,36 Q32,38 36,36" fill="none" stroke="#FF004E" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Left arm (holding wrench) -->
+  <rect x="6" y="26" width="5" height="12" rx="2.5" fill="#350066" transform="rotate(-20 8.5 32)"/>
+  <circle cx="5" cy="25" r="3.5" fill="#45007A"/>
+  <!-- Wrench -->
+  <line x1="3" y1="22" x2="0" y2="14" stroke="#C0C0C0" stroke-width="2" stroke-linecap="round"/>
+  <path d="M-2,12 L0,14 L2,12" fill="none" stroke="#C0C0C0" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Right arm (holding magnifier) -->
+  <rect x="51" y="24" width="5" height="12" rx="2.5" fill="#350066" transform="rotate(15 53.5 30)"/>
+  <circle cx="55" cy="22" r="3.5" fill="#45007A"/>
+  <!-- Magnifying glass -->
+  <circle cx="58" cy="14" r="5" fill="none" stroke="#B5005D" stroke-width="1.5"/>
+  <line x1="55" y1="18" x2="53" y2="20" stroke="#B5005D" stroke-width="2" stroke-linecap="round"/>
+  <!-- Left leg -->
+  <rect x="24" y="50" width="5" height="7" rx="2.5" fill="#2A0050"/>
+  <rect x="21" y="55" width="9" height="4" rx="2" fill="#350066"/>
+  <!-- Right leg -->
+  <rect x="35" y="50" width="5" height="7" rx="2.5" fill="#2A0050"/>
+  <rect x="34" y="55" width="9" height="4" rx="2" fill="#350066"/>
+</svg>

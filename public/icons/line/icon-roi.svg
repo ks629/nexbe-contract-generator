@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="ROI — zwrot z inwestycji" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>ROI — zwrot z inwestycji</title>
+  <!-- Chart axes -->
+  <line x1="10" y1="54" x2="58" y2="54"/>
+  <line x1="10" y1="54" x2="10" y2="8"/>
+  <!-- Growth line -->
+  <polyline points="14,48 22,42 30,38 38,28 46,16 54,10" stroke-width="2.5"/>
+  <!-- Data points -->
+  <circle cx="14" cy="48" r="2"/>
+  <circle cx="30" cy="38" r="2"/>
+  <circle cx="46" cy="16" r="2"/>
+  <!-- Arrow at end (growth) -->
+  <polyline points="50,14 54,10 54,16"/>
+  <!-- Percentage indicator -->
+  <text x="46" y="28" fill="currentColor" font-family="sans-serif" font-size="7" font-weight="700" stroke="none" opacity="0.6">%</text>
+</svg>

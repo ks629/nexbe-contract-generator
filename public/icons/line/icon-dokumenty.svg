@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Dokumenty" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Dokumenty</title>
+  <!-- Back page -->
+  <rect x="18" y="6" width="32" height="42" rx="3" opacity="0.3"/>
+  <!-- Front page -->
+  <rect x="12" y="12" width="32" height="42" rx="3"/>
+  <!-- Fold corner -->
+  <path d="M36,12 L44,12 L44,20" opacity="0.4"/>
+  <path d="M36,12 L36,20 L44,20" opacity="0.4"/>
+  <!-- Text lines -->
+  <line x1="18" y1="28" x2="38" y2="28" opacity="0.5"/>
+  <line x1="18" y1="34" x2="34" y2="34" opacity="0.4"/>
+  <line x1="18" y1="40" x2="36" y2="40" opacity="0.3"/>
+  <line x1="18" y1="46" x2="30" y2="46" opacity="0.2"/>
+  <!-- Lightning accent (energy documents) -->
+  <path d="M48,38 L50,38 L49,41 L51,41 L47,46 L48,42 L46.5,42Z" opacity="0.5"/>
+</svg>

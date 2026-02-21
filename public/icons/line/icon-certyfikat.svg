@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Certyfikat jakości" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Certyfikat jakości</title>
+  <!-- Medal/badge circle -->
+  <circle cx="32" cy="24" r="18"/>
+  <circle cx="32" cy="24" r="12" opacity="0.4"/>
+  <!-- Checkmark inside -->
+  <path d="M25,24 L30,29 L39,19" stroke-width="2.5"/>
+  <!-- Ribbon straps -->
+  <line x1="22" y1="38" x2="16" y2="58"/>
+  <line x1="16" y1="58" x2="24" y2="52"/>
+  <line x1="42" y1="38" x2="48" y2="58"/>
+  <line x1="48" y1="58" x2="40" y2="52"/>
+</svg>

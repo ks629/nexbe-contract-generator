@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Zespół" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Zespół</title>
+  <!-- Person 1 (center, front) -->
+  <circle cx="32" cy="22" r="8"/>
+  <path d="M16,56 Q16,40 32,38 Q48,40 48,56"/>
+  <!-- Person 2 (left, behind) -->
+  <circle cx="16" cy="18" r="6" opacity="0.5"/>
+  <path d="M4,48 Q4,36 16,34 Q24,35 26,40" opacity="0.5"/>
+  <!-- Person 3 (right, behind) -->
+  <circle cx="48" cy="18" r="6" opacity="0.5"/>
+  <path d="M60,48 Q60,36 48,34 Q40,35 38,40" opacity="0.5"/>
+  <!-- Connection sparks -->
+  <line x1="22" y1="16" x2="26" y2="18" opacity="0.3"/>
+  <line x1="42" y1="16" x2="38" y2="18" opacity="0.3"/>
+</svg>

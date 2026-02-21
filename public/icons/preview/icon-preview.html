@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXBE Icon System v1.1</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #0D0019; color: #F0E8FF; font-family: 'Inter', sans-serif; }
+    .icon-card { transition: all 0.2s; }
+    .icon-card:hover { background: rgba(181, 0, 93, 0.1); transform: scale(1.02); }
+    .filter-btn.active { background: #FF004E; color: #fff; }
+    .filter-btn { border: 1px solid rgba(181, 0, 93, 0.3); }
+    .section-title { background: linear-gradient(135deg, #230045 0%, #B5005D 50%, #FF004E 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .line-icon-img { filter: brightness(0) saturate(100%) invert(13%) sepia(97%) saturate(7471%) hue-rotate(334deg) brightness(97%) contrast(113%); }
+    .line-icon-light { filter: brightness(0) saturate(100%) invert(95%) sepia(5%) saturate(500%) hue-rotate(220deg) brightness(105%) contrast(95%); }
+    .line-icon-dark { filter: brightness(0) saturate(100%) invert(8%) sepia(80%) saturate(4000%) hue-rotate(265deg) brightness(50%) contrast(120%); }
+    .variant-label { font-size: 9px; opacity: 0.3; text-transform: uppercase; letter-spacing: 0.05em; }
+    .bg-light-preview { background: #F0E8FF; }
+    .bg-glass-preview { background: rgba(26, 0, 51, 0.6); }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0D0019; }
+    ::-webkit-scrollbar-thumb { background: #350066; border-radius: 4px; }
+  </style>
+</head>
+<body class="min-h-screen p-8">
+  <!-- Header -->
+  <div class="max-w-7xl mx-auto mb-12">
+    <div class="flex items-center gap-4 mb-2">
+      <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #FF004E, #B5005D)">
+        <svg viewBox="0 0 64 64" class="w-6 h-6">
+          <rect x="19" y="14" width="26" height="34" rx="6" fill="#350066"/>
+          <rect x="23" y="22" width="7" height="9" rx="2.5" fill="#FF004E"/>
+          <rect x="34" y="22" width="7" height="9" rx="2.5" fill="#FF004E"/>
+          <circle cx="26.5" cy="26" r="1.5" fill="#fff"/>
+          <circle cx="37.5" cy="26" r="1.5" fill="#fff"/>
+          <rect x="31" y="5" width="2" height="9" rx="1" fill="#45007A"/>
+          <circle cx="32" cy="4" r="2.5" fill="#FF004E"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="text-3xl font-bold">NEXBE Icon System <span class="text-sm font-normal opacity-50">v1.1</span></h1>
+        <p class="text-sm opacity-50">41 Line Icons + 19 NEXBi Mini Icons (x3 variants) = 98 symbols</p>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="flex flex-wrap gap-3 mt-6">
+      <button onclick="filterIcons('all')" class="filter-btn active px-4 py-2 rounded-lg text-sm font-medium" id="btn-all">Wszystkie (60)</button>
+      <button onclick="filterIcons('line')" class="filter-btn px-4 py-2 rounded-lg text-sm font-medium" id="btn-line">Line Icons (41)</button>
+      <button onclick="filterIcons('nexbi')" class="filter-btn px-4 py-2 rounded-lg text-sm font-medium" id="btn-nexbi">NEXBi Mini (19)</button>
+      <button onclick="filterIcons('variants')" class="filter-btn px-4 py-2 rounded-lg text-sm font-medium" id="btn-variants">Warianty NEXBi</button>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto" id="icons-container"></div>
+
+  <!-- Footer -->
+  <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 text-center">
+    <p class="text-sm opacity-40">NEXBE Icon System v1.1 — 60 unikalnych ikon (41 line + 19 NEXBi) + 38 wariantow = 98 symboli</p>
+    <p class="text-xs opacity-20 mt-2">Kolory: #FF004E (flame) | #B5005D (raspberry) | #350066 (plum) | #230045 (dark) | #F0E8FF (text)</p>
+  </div>
+
+  <script>
+    var sections = [
+      {
+        title: "Produkty i Uslugi", type: "line",
+        icons: [
+          ["icon-magazyn-energii", "Magazyn energii"],
+          ["icon-fotowoltaika", "Panel sloneczny"],
+          ["icon-ladowarka-ev", "Ladowarka EV"],
+          ["icon-auto-elektryczne", "Auto elektryczne"],
+          ["icon-falownik", "Falownik AC/DC"],
+          ["icon-retrofit", "Retrofit / upgrade"],
+          ["icon-pompa-ciepla", "Pompa ciepla"],
+          ["icon-smart-ems", "Smart EMS"],
+          ["icon-instalacja-pv", "Instalacja PV"],
+          ["icon-system-hybrydowy", "System hybrydowy"]
+        ]
+      },
+      {
+        title: "Finanse i Dotacje", type: "line",
+        icons: [
+          ["icon-dotacja", "Dotacja"],
+          ["icon-moj-prad", "Moj Prad"],
+          ["icon-oszczednosci", "Oszczednosci"],
+          ["icon-raty", "Raty"],
+          ["icon-roi", "ROI"],
+          ["icon-kalkulator", "Kalkulator"],
+          ["icon-ulga-termomodernizacyjna", "Ulga termomod."],
+          ["icon-bezplatna-wycena", "Bezplatna wycena"],
+          ["icon-taryfa-dynamiczna", "Taryfa dynamiczna"]
+        ]
+      },
+      {
+        title: "Energia i Technologia", type: "line",
+        icons: [
+          ["icon-energia-sloneczna", "Energia sloneczna"],
+          ["icon-energia-nocna", "Energia nocna"],
+          ["icon-siec-energetyczna", "Siec energetyczna"],
+          ["icon-blackout-ochrona", "Ochrona blackout"],
+          ["icon-monitoring-247", "Monitoring 24/7"],
+          ["icon-bateria-lfp", "Bateria LFP"],
+          ["icon-zywotnosc", "Zywotnosc"],
+          ["icon-pojemnosc-kwh", "Pojemnosc kWh"],
+          ["icon-co2-redukcja", "Redukcja CO2"],
+          ["icon-dom-energia", "Dom z energia"],
+          ["icon-v2h", "Vehicle-to-Home"]
+        ]
+      },
+      {
+        title: "Zaufanie i Social Proof", type: "line",
+        icons: [
+          ["icon-certyfikat", "Certyfikat"],
+          ["icon-gwiazdki-opinie", "Opinie 5*"],
+          ["icon-gwarancja", "Gwarancja"],
+          ["icon-instalatorzy", "Instalatorzy"],
+          ["icon-partner-keno", "Partnerstwo"],
+          ["icon-forbes-30u30", "Forbes 30u30"]
+        ]
+      },
+      {
+        title: "Ogolne", type: "line",
+        icons: [
+          ["icon-dokumenty", "Dokumenty"],
+          ["icon-klient", "Klient"],
+          ["icon-zespol", "Zespol"],
+          ["icon-szkolenie", "Szkolenie"],
+          ["icon-baza-wiedzy", "Baza wiedzy"]
+        ]
+      },
+      {
+        title: "NEXBi — Proces Zakupu", type: "nexbi",
+        icons: [
+          ["icon-nexbi-konfiguracja", "Konfiguracja"],
+          ["icon-nexbi-doradca", "Doradca"],
+          ["icon-nexbi-wycena", "Wycena"],
+          ["icon-nexbi-umowa", "Umowa"],
+          ["icon-nexbi-dostawa", "Dostawa"],
+          ["icon-nexbi-montaz", "Montaz"],
+          ["icon-nexbi-uruchomienie", "Uruchomienie"],
+          ["icon-nexbi-serwis", "Serwis"]
+        ]
+      },
+      {
+        title: "NEXBi — Edukacja i Wiedza", type: "nexbi",
+        icons: [
+          ["icon-nexbi-naukowiec", "Naukowiec"],
+          ["icon-nexbi-ekolog", "Ekolog"],
+          ["icon-nexbi-superhero", "Superhero"],
+          ["icon-nexbi-pomysl", "Pomysl"],
+          ["icon-nexbi-pytanie", "Pytanie"],
+          ["icon-nexbi-ok", "OK / Kciuk"],
+          ["icon-nexbi-powitanie", "Powitanie"],
+          ["icon-nexbi-prezentacja", "Prezentacja"]
+        ]
+      },
+      {
+        title: "NEXBi — Kontakt i CTA", type: "nexbi",
+        icons: [
+          ["icon-nexbi-telefon", "Telefon"],
+          ["icon-nexbi-chat", "Chat"],
+          ["icon-nexbi-formularz", "Formularz"]
+        ]
+      }
+    ];
+
+    function buildUI() {
+      var container = document.getElementById("icons-container");
+      while (container.firstChild) { container.removeChild(container.firstChild); }
+
+      sections.forEach(function(section) {
+        var sectionEl = document.createElement("section");
+        sectionEl.className = "mb-12";
+        sectionEl.dataset.type = section.type;
+
+        var h2 = document.createElement("h2");
+        h2.className = "section-title text-2xl font-bold mb-6";
+        h2.textContent = section.title;
+        sectionEl.appendChild(h2);
+
+        var grid = document.createElement("div");
+        grid.className = "grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4";
+
+        section.icons.forEach(function(icon) {
+          var name = icon[0];
+          var label = icon[1];
+          var isLine = section.type === "line";
+          var folder = isLine ? "line" : "nexbi";
+
+          var card = document.createElement("div");
+          card.className = "icon-card rounded-xl p-4 text-center" + (isLine ? " line-icon" : "");
+
+          var imgRow = document.createElement("div");
+          imgRow.className = "flex items-center justify-center gap-3 mb-3";
+
+          [6, 12, 16].forEach(function(size) {
+            var img = document.createElement("img");
+            img.src = "../" + folder + "/" + name + ".svg";
+            img.className = "w-" + size + " h-" + size;
+            img.alt = label;
+            if (isLine) { img.classList.add("line-icon-img"); }
+            imgRow.appendChild(img);
+          });
+
+          card.appendChild(imgRow);
+
+          // Line icon color variants row
+          if (isLine) {
+            var varRow = document.createElement("div");
+            varRow.className = "flex items-center justify-center gap-2 mb-2";
+
+            var variants = [
+              ["line-icon-img", "flame"],
+              ["line-icon-light", "light"],
+              ["line-icon-dark", "dark"]
+            ];
+            variants.forEach(function(v) {
+              var wrap = document.createElement("div");
+              wrap.className = "text-center";
+              var vImg = document.createElement("img");
+              vImg.src = "../" + folder + "/" + name + ".svg";
+              vImg.className = "w-5 h-5 mx-auto " + v[0];
+              if (v[1] === "dark") {
+                vImg.style.background = "#F0E8FF";
+                vImg.style.borderRadius = "4px";
+                vImg.style.padding = "2px";
+              }
+              vImg.alt = v[1];
+              wrap.appendChild(vImg);
+              var vLabel = document.createElement("span");
+              vLabel.className = "variant-label";
+              vLabel.textContent = v[1];
+              wrap.appendChild(vLabel);
+              varRow.appendChild(wrap);
+            });
+            card.appendChild(varRow);
+          }
+
+          var pName = document.createElement("p");
+          pName.className = "text-xs opacity-60";
+          pName.textContent = name;
+          card.appendChild(pName);
+
+          var pLabel = document.createElement("p");
+          pLabel.className = "text-xs opacity-40 mt-1";
+          pLabel.textContent = label;
+          card.appendChild(pLabel);
+
+          grid.appendChild(card);
+        });
+
+        sectionEl.appendChild(grid);
+        container.appendChild(sectionEl);
+      });
+
+      // NEXBi Variants section (hidden by default, shown via filter)
+      var varSection = document.createElement("section");
+      varSection.className = "mb-12";
+      varSection.dataset.type = "variants";
+      varSection.style.display = "none";
+
+      var varH2 = document.createElement("h2");
+      varH2.className = "section-title text-2xl font-bold mb-6";
+      varH2.textContent = "NEXBi Warianty Kolorystyczne";
+      varSection.appendChild(varH2);
+
+      // Description
+      var desc = document.createElement("p");
+      desc.className = "text-sm opacity-50 mb-6";
+      desc.textContent = "Kazda ikona NEXBi ma 3 warianty: default (ciemne tlo), light (glass/karty), outlined (jasne tlo / malych rozmiarow)";
+      varSection.appendChild(desc);
+
+      var varGrid = document.createElement("div");
+      varGrid.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6";
+
+      // Get NEXBi icons from sections
+      var nexbiIcons = [];
+      sections.forEach(function(s) {
+        if (s.type === "nexbi") {
+          s.icons.forEach(function(i) { nexbiIcons.push(i); });
+        }
+      });
+
+      nexbiIcons.forEach(function(icon) {
+        var name = icon[0];
+        var label = icon[1];
+
+        var card = document.createElement("div");
+        card.className = "icon-card rounded-xl p-4";
+
+        var title = document.createElement("p");
+        title.className = "text-xs font-medium mb-3 opacity-70";
+        title.textContent = label + " (" + name + ")";
+        card.appendChild(title);
+
+        var row = document.createElement("div");
+        row.className = "flex items-end gap-4";
+
+        // Default variant (dark bg)
+        var col1 = document.createElement("div");
+        col1.className = "text-center rounded-lg p-3";
+        col1.style.background = "#0D0019";
+        var img1 = document.createElement("img");
+        img1.src = "../nexbi/" + name + ".svg";
+        img1.className = "w-12 h-12 mx-auto";
+        img1.alt = "default";
+        col1.appendChild(img1);
+        var l1 = document.createElement("span");
+        l1.className = "variant-label";
+        l1.textContent = "default";
+        col1.appendChild(l1);
+        row.appendChild(col1);
+
+        // Light variant (glass bg)
+        var col2 = document.createElement("div");
+        col2.className = "text-center rounded-lg p-3 bg-glass-preview";
+        var img2 = document.createElement("img");
+        img2.src = "../nexbi/" + name + "-light.svg";
+        img2.className = "w-12 h-12 mx-auto";
+        img2.alt = "light";
+        col2.appendChild(img2);
+        var l2 = document.createElement("span");
+        l2.className = "variant-label";
+        l2.textContent = "light";
+        col2.appendChild(l2);
+        row.appendChild(col2);
+
+        // Outlined variant (light bg)
+        var col3 = document.createElement("div");
+        col3.className = "text-center rounded-lg p-3 bg-light-preview";
+        var img3 = document.createElement("img");
+        img3.src = "../nexbi/" + name + "-outlined.svg";
+        img3.className = "w-12 h-12 mx-auto";
+        img3.alt = "outlined";
+        col3.appendChild(img3);
+        var l3 = document.createElement("span");
+        l3.className = "variant-label";
+        l3.textContent = "outlined";
+        col3.appendChild(l3);
+        row.appendChild(col3);
+
+        card.appendChild(row);
+        varGrid.appendChild(card);
+      });
+
+      varSection.appendChild(varGrid);
+      container.appendChild(varSection);
+    }
+
+    function filterIcons(type) {
+      document.querySelectorAll(".filter-btn").forEach(function(b) { b.classList.remove("active"); });
+      document.getElementById("btn-" + type).classList.add("active");
+
+      document.querySelectorAll("[data-type]").forEach(function(s) {
+        if (type === "all") {
+          s.style.display = s.dataset.type === "variants" ? "none" : "";
+        } else if (type === "variants") {
+          s.style.display = s.dataset.type === "variants" ? "" : "none";
+        } else if (s.dataset.type === type) {
+          s.style.display = "";
+        } else {
+          s.style.display = "none";
+        }
+      });
+    }
+
+    buildUI();
+  </script>
+</body>
+</html>

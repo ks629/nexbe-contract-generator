@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Żywotność — 6000+ cykli" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Żywotność — 6000+ cykli</title>
+  <!-- Clock circle -->
+  <circle cx="32" cy="28" r="22"/>
+  <!-- Clock hands -->
+  <line x1="32" y1="28" x2="32" y2="16"/>
+  <line x1="32" y1="28" x2="42" y2="28"/>
+  <!-- Clock center dot -->
+  <circle cx="32" cy="28" r="2"/>
+  <!-- Cycle arrows around clock -->
+  <path d="M14,50 Q8,42 10,32" opacity="0.5"/>
+  <polyline points="8,34 10,32 12,34" opacity="0.5"/>
+  <path d="M50,50 Q56,42 54,32" opacity="0.5"/>
+  <polyline points="52,34 54,32 56,34" opacity="0.5"/>
+  <!-- Cycle count -->
+  <text x="32" y="58" text-anchor="middle" fill="currentColor" font-family="sans-serif" font-size="8" font-weight="700" stroke="none" opacity="0.6">6000+</text>
+</svg>

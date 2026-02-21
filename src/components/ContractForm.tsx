@@ -20,18 +20,19 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import {
-  ChevronLeft, ChevronRight, User, MapPin, Sun, Package, CreditCard, FileText, UserCheck,
+  ChevronLeft, ChevronRight, User, MapPin, Package, UserCheck,
   Building, Phone, Mail, Hash, AlertCircle, ExternalLink,
 } from 'lucide-react';
+import { NexbeIcon } from '@nexbe/icons';
 
-const STEPS = [
+const STEPS: Array<{ label: string; icon?: React.ComponentType<{ className?: string }>; nexbeIcon?: string }> = [
   { label: 'Zamawiający', icon: User },
-  { label: 'Instalacja PV', icon: Sun },
+  { label: 'Instalacja PV', nexbeIcon: 'fotowoltaika' },
   { label: 'Produkt', icon: Package },
-  { label: 'Cena', icon: CreditCard },
-  { label: 'Załączniki', icon: FileText },
+  { label: 'Cena', nexbeIcon: 'raty' },
+  { label: 'Załączniki', nexbeIcon: 'dokumenty' },
   { label: 'Handlowiec', icon: UserCheck },
-  { label: 'Podsumowanie', icon: FileText },
+  { label: 'Podsumowanie', nexbeIcon: 'dokumenty' },
 ];
 
 export default function ContractForm() {
@@ -182,7 +183,6 @@ export default function ContractForm() {
         <Progress value={progress} className="h-1.5" />
         <div className="flex gap-1.5 overflow-x-auto pb-1">
           {STEPS.map((step, i) => {
-            const Icon = step.icon;
             return (
               <button
                 key={i}
@@ -192,10 +192,14 @@ export default function ContractForm() {
                     ? 'bg-[#B5005D] text-white'
                     : i < currentStep
                     ? 'bg-[#B5005D]/20 text-[#B5005D]'
-                    : 'bg-white/5 text-white/40'
+                    : 'bg-white/5 text-white/60'
                 }`}
               >
-                <Icon className="h-3.5 w-3.5" />
+                {step.nexbeIcon ? (
+                  <NexbeIcon name={step.nexbeIcon} size={14} variant="inherit" />
+                ) : step.icon ? (
+                  <step.icon className="h-3.5 w-3.5" />
+                ) : null}
                 <span className="hidden sm:inline">{step.label}</span>
               </button>
             );
@@ -247,7 +251,7 @@ export default function ContractForm() {
           </Button>
         ) : (
           <Button onClick={handleGenerate} className="bg-green-600 hover:bg-green-700 text-white">
-            <FileText className="mr-2 h-4 w-4" />
+            <NexbeIcon name="dokumenty" size={16} variant="inherit" className="mr-2" />
             Generuj umowę
           </Button>
         )}
@@ -270,7 +274,7 @@ interface StepProps {
 function FieldRow({ children, label, required }: { children: React.ReactNode; label: string; required?: boolean }) {
   return (
     <div className="space-y-1.5">
-      <Label className="text-xs text-white/50 uppercase tracking-wide">
+      <Label className="text-xs text-white/60 uppercase tracking-wide">
         {label} {required && <span className="text-[#B5005D]">*</span>}
       </Label>
       {children}
@@ -288,7 +292,7 @@ function FormInput({ path, getField, updateField, placeholder, type = 'text' }: 
       value={(getField(path) as string) || ''}
       onChange={(e) => updateField(path, type === 'number' ? parseFloat(e.target.value) || 0 : e.target.value)}
       placeholder={placeholder}
-      className="bg-white/5 border-white/10 text-white placeholder:text-white/30"
+      className="bg-white/5 border-white/10 text-white placeholder:text-white/60"
     />
   );
 }
@@ -401,7 +405,7 @@ function StepExistingPV({ getField, updateField }: StepProps) {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2 text-white/60 mb-2">
-        <Sun className="h-4 w-4" />
+        <NexbeIcon name="fotowoltaika" size={16} variant="inherit" />
         <span className="text-sm font-medium">Istniejąca instalacja fotowoltaiczna</span>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -509,7 +513,7 @@ function StepPricing({ contractData, onPriceChange, onVatChange, updateField }: 
     <div className="space-y-6">
       {/* VAT */}
       <div className="space-y-3">
-        <Label className="text-xs text-white/50 uppercase tracking-wide">Stawka VAT</Label>
+        <Label className="text-xs text-white/60 uppercase tracking-wide">Stawka VAT</Label>
         <RadioGroup
           value={String(pricing.vatRate)}
           onValueChange={onVatChange}
@@ -541,7 +545,7 @@ function StepPricing({ contractData, onPriceChange, onVatChange, updateField }: 
 
       {/* Financing */}
       <div className="space-y-3">
-        <Label className="text-xs text-white/50 uppercase tracking-wide">Forma płatności</Label>
+        <Label className="text-xs text-white/60 uppercase tracking-wide">Forma płatności</Label>
         <RadioGroup
           value={pricing.financing}
           onValueChange={(v) => {
@@ -557,21 +561,21 @@ function StepPricing({ contractData, onPriceChange, onVatChange, updateField }: 
             <RadioGroupItem value="OWN_FUNDS" id="own" />
             <label htmlFor="own" className="text-sm text-white/80 cursor-pointer">
               <strong>Gotówka (środki własne)</strong>
-              <p className="text-xs text-white/40 mt-0.5">Płatność w 3 transzach: 30% / 60% / 10%</p>
+              <p className="text-xs text-white/60 mt-0.5">Płatność w 3 transzach: 30% / 60% / 10%</p>
             </label>
           </div>
           <div className="flex items-start space-x-3 rounded-lg bg-white/5 border border-white/10 p-3">
             <RadioGroupItem value="CREDIT" id="credit" />
             <label htmlFor="credit" className="text-sm text-white/80 cursor-pointer">
               <strong>Kredyt bankowy</strong>
-              <p className="text-xs text-white/40 mt-0.5">Płatność przez bank kredytujący</p>
+              <p className="text-xs text-white/60 mt-0.5">Płatność przez bank kredytujący</p>
             </label>
           </div>
           <div className="flex items-start space-x-3 rounded-lg bg-white/5 border border-white/10 p-3">
             <RadioGroupItem value="LEASING" id="leasing" />
             <label htmlFor="leasing" className="text-sm text-white/80 cursor-pointer">
               <strong>Leasing</strong>
-              <p className="text-xs text-white/40 mt-0.5">Płatność przez firmę leasingową</p>
+              <p className="text-xs text-white/60 mt-0.5">Płatność przez firmę leasingową</p>
             </label>
           </div>
         </RadioGroup>
@@ -586,7 +590,7 @@ function StepPricing({ contractData, onPriceChange, onVatChange, updateField }: 
               value={pricing.ownContribution || ''}
               onChange={(e) => updateField('pricing.ownContribution', parseFloat(e.target.value) || 0)}
               placeholder="0"
-              className="bg-white/5 border-white/10 text-white placeholder:text-white/30 w-48"
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/60 w-48"
             />
           </FieldRow>
           <FieldRow label="Nazwa instytucji finansującej (opcjonalnie)">
@@ -595,10 +599,10 @@ function StepPricing({ contractData, onPriceChange, onVatChange, updateField }: 
               value={pricing.financingInstitution || ''}
               onChange={(e) => updateField('pricing.financingInstitution', e.target.value)}
               placeholder={pricing.financing === 'CREDIT' ? 'np. PKO BP, mBank' : 'np. PKO Leasing'}
-              className="bg-white/5 border-white/10 text-white placeholder:text-white/30 w-64"
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/60 w-64"
             />
           </FieldRow>
-          <p className="text-xs text-white/30">
+          <p className="text-xs text-white/60">
             Pozostała kwota ({formatPLN(pricing.grossPrice - (pricing.ownContribution || 0))}) zostanie opłacona przez instytucję finansującą.
           </p>
         </div>
@@ -612,7 +616,7 @@ function StepAttachments({ getField, updateField }: StepProps) {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2 text-white/60 mb-2">
-        <FileText className="h-4 w-4" />
+        <NexbeIcon name="dokumenty" size={16} variant="inherit" />
         <span className="text-sm font-medium">Załączniki do umowy</span>
       </div>
 
@@ -627,7 +631,7 @@ function StepAttachments({ getField, updateField }: StepProps) {
             <label htmlFor="poaOSD" className="text-sm text-white/80 cursor-pointer font-medium">
               Pełnomocnictwo OSD (przyłączenie mikroinstalacji)
             </label>
-            <p className="text-xs text-white/40 mt-1">Upoważnienie do zgłoszenia/aktualizacji przyłączenia u operatora sieci</p>
+            <p className="text-xs text-white/60 mt-1">Upoważnienie do zgłoszenia/aktualizacji przyłączenia u operatora sieci</p>
           </div>
         </div>
 
@@ -641,7 +645,7 @@ function StepAttachments({ getField, updateField }: StepProps) {
             <label htmlFor="poaSubsidy" className="text-sm text-white/80 cursor-pointer font-medium">
               Pełnomocnictwo do złożenia wniosku o dofinansowanie
             </label>
-            <p className="text-xs text-white/40 mt-1">NFOŚiGW — Mój Prąd, Czyste Powietrze</p>
+            <p className="text-xs text-white/60 mt-1">NFOŚiGW — Mój Prąd, Czyste Powietrze</p>
             {(getField('attachments.poaSubsidy') as boolean) && (
               <div className="mt-3">
                 <Select
@@ -666,14 +670,14 @@ function StepAttachments({ getField, updateField }: StepProps) {
           <Checkbox checked disabled className="opacity-60" />
           <div>
             <p className="text-sm text-white/80 font-medium">Klauzula informacyjna RODO</p>
-            <p className="text-xs text-white/40 mt-1">Zawsze dołączana — Załącznik nr 4</p>
+            <p className="text-xs text-white/60 mt-1">Zawsze dołączana — Załącznik nr 4</p>
           </div>
         </div>
 
         <div className="flex items-start space-x-3 rounded-lg bg-blue-500/5 border border-blue-500/20 p-4">
           <div className="flex-1">
             <p className="text-sm text-white/80 font-medium">Arkusz Ustaleń Montażowych (AUM)</p>
-            <p className="text-xs text-white/40 mt-1">Wypełniany osobno — Załącznik nr 1</p>
+            <p className="text-xs text-white/60 mt-1">Wypełniany osobno — Załącznik nr 1</p>
           </div>
           <Button
             variant="outline"
@@ -689,7 +693,7 @@ function StepAttachments({ getField, updateField }: StepProps) {
 
       {/* Declarations */}
       <div className="space-y-4 pt-4">
-        <p className="text-xs text-white/50 uppercase tracking-wide">Oświadczenia</p>
+        <p className="text-xs text-white/60 uppercase tracking-wide">Oświadczenia</p>
 
         <FieldRow label="Typ budynku">
           <Select
@@ -760,7 +764,7 @@ function StepSalesRep({ getField, updateField }: StepProps) {
       {/* ─── Edycja dokumentów ─── */}
       <div className="border-t border-white/10 pt-6 mt-6">
         <div className="flex items-center gap-2 text-white/60 mb-4">
-          <FileText className="h-4 w-4" />
+          <NexbeIcon name="dokumenty" size={16} variant="inherit" />
           <span className="text-sm font-medium">Edycja dokumentów — pola dodatkowe</span>
         </div>
 
@@ -817,7 +821,7 @@ function StepSalesRep({ getField, updateField }: StepProps) {
               value={(getField('additionalNotes') as string) || ''}
               onChange={(e) => updateField('additionalNotes', e.target.value)}
               placeholder="Np. dodatkowe ustalenia z klientem, specjalne warunki montażu..."
-              className="bg-white/5 border-white/10 text-white placeholder:text-white/30 min-h-[80px]"
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/60 min-h-[80px]"
               rows={3}
             />
           </FieldRow>
@@ -836,17 +840,17 @@ function StepSummary({ contractData, onGenerate }: { contractData: Partial<Contr
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-3">
-          <p className="text-xs text-white/40 uppercase">Numer umowy</p>
+          <p className="text-xs text-white/60 uppercase">Numer umowy</p>
           <p className="text-lg font-bold text-[#B5005D]">{d.contractNumber}</p>
         </div>
         <div className="space-y-3">
-          <p className="text-xs text-white/40 uppercase">Data</p>
+          <p className="text-xs text-white/60 uppercase">Data</p>
           <p className="text-white">{d.contractDate}</p>
         </div>
       </div>
 
       <div className="rounded-lg bg-white/5 border border-white/10 p-4 space-y-2">
-        <p className="text-xs text-white/40 uppercase">Zamawiający</p>
+        <p className="text-xs text-white/60 uppercase">Zamawiający</p>
         <p className="text-white font-medium">{d.client?.fullName || '—'}</p>
         <p className="text-sm text-white/60">
           {d.client?.address?.street}, {d.client?.address?.postalCode} {d.client?.address?.city}
@@ -855,7 +859,7 @@ function StepSummary({ contractData, onGenerate }: { contractData: Partial<Contr
       </div>
 
       <div className="rounded-lg bg-white/5 border border-white/10 p-4 space-y-2">
-        <p className="text-xs text-white/40 uppercase">Produkt</p>
+        <p className="text-xs text-white/60 uppercase">Produkt</p>
         <p className="text-white font-medium">{d.product?.brand} — {d.product?.model}</p>
         <p className="text-sm text-white/60">
           Magazyn: {d.product?.batteryCapacity_kWh} kWh | Falownik: {d.product?.inverterModel} ({d.product?.inverterPower_kW} kW)
@@ -866,7 +870,7 @@ function StepSummary({ contractData, onGenerate }: { contractData: Partial<Contr
       </div>
 
       <div className="rounded-lg bg-[#B5005D]/10 border border-[#B5005D]/30 p-4 space-y-2">
-        <p className="text-xs text-white/40 uppercase">Wynagrodzenie</p>
+        <p className="text-xs text-white/60 uppercase">Wynagrodzenie</p>
         <p className="text-2xl font-bold text-[#B5005D]">{formatPLN(d.pricing?.grossPrice || 0)}</p>
         <p className="text-sm text-white/60">
           Netto: {formatPLN(d.pricing?.netPrice || 0)} + VAT {d.pricing?.vatRate}%: {formatPLN(d.pricing?.vatAmount || 0)}
@@ -874,7 +878,7 @@ function StepSummary({ contractData, onGenerate }: { contractData: Partial<Contr
       </div>
 
       <div className="rounded-lg bg-white/5 border border-white/10 p-4 space-y-2">
-        <p className="text-xs text-white/40 uppercase">Handlowiec</p>
+        <p className="text-xs text-white/60 uppercase">Handlowiec</p>
         <p className="text-white font-medium">{d.salesRep?.fullName || '—'}</p>
         <p className="text-sm text-white/60">{d.salesRep?.position}</p>
       </div>

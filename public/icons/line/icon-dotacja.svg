@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Dotacja — dofinansowanie" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Dotacja — dofinansowanie</title>
+  <!-- Hand (open, from below) -->
+  <path d="M16,56 L16,38 Q16,34 20,34 L44,34 Q48,34 48,38 L48,56"/>
+  <!-- Fingers -->
+  <path d="M20,34 L20,30 Q20,28 22,28 L24,28 Q26,28 26,30 L26,34"/>
+  <path d="M28,34 L28,28 Q28,26 30,26 L32,26 Q34,26 34,28 L34,34"/>
+  <path d="M36,34 L36,30 Q36,28 38,28 L40,28 Q42,28 42,30 L42,34"/>
+  <!-- Coin -->
+  <circle cx="32" cy="14" r="10"/>
+  <circle cx="32" cy="14" r="6" opacity="0.4"/>
+  <!-- PLN symbol -->
+  <text x="32" y="18" text-anchor="middle" fill="currentColor" font-family="sans-serif" font-size="10" font-weight="700" stroke="none">zł</text>
+  <!-- Down arrow (receiving) -->
+  <line x1="32" y1="24" x2="32" y2="28" opacity="0.5"/>
+</svg>

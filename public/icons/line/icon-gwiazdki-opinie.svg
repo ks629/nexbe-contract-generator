@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Opinie klientów — 5 gwiazdek" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Opinie klientów — 5 gwiazdek</title>
+  <!-- 5 stars in a row -->
+  <!-- Star 1 -->
+  <path d="M10,28 L11.5,24 L13,28 L17,28 L14,31 L15,35 L11.5,32 L8,35 L9,31 L6,28Z"/>
+  <!-- Star 2 -->
+  <path d="M21,28 L22.5,24 L24,28 L28,28 L25,31 L26,35 L22.5,32 L19,35 L20,31 L17,28Z"/>
+  <!-- Star 3 (center, bigger) -->
+  <path d="M29,26 L32,18 L35,26 L43,26 L37,31 L39,39 L32,34 L25,39 L27,31 L21,26Z"/>
+  <!-- Star 4 -->
+  <path d="M40,28 L41.5,24 L43,28 L47,28 L44,31 L45,35 L41.5,32 L38,35 L39,31 L36,28Z"/>
+  <!-- Star 5 -->
+  <path d="M51,28 L52.5,24 L54,28 L58,28 L55,31 L56,35 L52.5,32 L49,35 L50,31 L47,28Z"/>
+  <!-- Rating line below -->
+  <line x1="16" y1="46" x2="48" y2="46" opacity="0.3"/>
+  <line x1="20" y1="50" x2="44" y2="50" opacity="0.2"/>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Klient" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Klient</title>
+  <!-- Head -->
+  <circle cx="32" cy="18" r="10"/>
+  <!-- Body/shoulders -->
+  <path d="M12,54 Q12,38 32,36 Q52,38 52,54"/>
+  <!-- Energy spark (NEXBE client) -->
+  <path d="M46,14 L48,14 L47,17 L49,17 L45,22 L46,18 L44.5,18Z" opacity="0.5"/>
+  <!-- Smile -->
+  <path d="M28,20 Q32,24 36,20" opacity="0.4"/>
+</svg>

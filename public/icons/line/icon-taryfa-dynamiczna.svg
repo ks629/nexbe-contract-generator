@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Taryfa dynamiczna — zmienne ceny energii" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Taryfa dynamiczna — zmienne ceny energii</title>
+  <!-- Price wave chart -->
+  <polyline points="8,44 16,28 24,38 32,18 40,32 48,22 56,36"/>
+  <!-- Axes -->
+  <line x1="6" y1="50" x2="58" y2="50" opacity="0.3"/>
+  <line x1="6" y1="14" x2="6" y2="50" opacity="0.3"/>
+  <!-- Clock (top-right) -->
+  <circle cx="50" cy="14" r="8" opacity="0.5"/>
+  <line x1="50" y1="14" x2="50" y2="10" opacity="0.5"/>
+  <line x1="50" y1="14" x2="53" y2="14" opacity="0.5"/>
+  <!-- PLN symbol -->
+  <text x="12" y="20" font-size="8" font-weight="bold" fill="currentColor" stroke="none" opacity="0.4">zł</text>
+  <!-- Down arrow (savings potential) -->
+  <path d="M42,42 L42,54 L38,50" opacity="0.5"/>
+  <path d="M42,54 L46,50" opacity="0.5"/>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Oszczędności na energii" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Oszczędności na energii</title>
+  <!-- Piggy bank body -->
+  <ellipse cx="32" cy="34" rx="20" ry="16"/>
+  <!-- Ear -->
+  <ellipse cx="18" cy="22" rx="4" ry="6"/>
+  <!-- Eye -->
+  <circle cx="22" cy="30" r="2"/>
+  <!-- Snout -->
+  <ellipse cx="12" cy="34" rx="5" ry="4"/>
+  <circle cx="11" cy="33" r="1"/>
+  <circle cx="11" cy="35" r="1"/>
+  <!-- Coin slot -->
+  <line x1="28" y1="18" x2="36" y2="18"/>
+  <!-- Lightning bolt on body -->
+  <path d="M34,28 L37,28 L35,33 L38,33 L33,40 L34,35 L32,35Z"/>
+  <!-- Legs -->
+  <line x1="22" y1="48" x2="22" y2="54"/>
+  <line x1="42" y1="48" x2="42" y2="54"/>
+  <!-- Feet -->
+  <line x1="20" y1="54" x2="24" y2="54"/>
+  <line x1="40" y1="54" x2="44" y2="54"/>
+  <!-- Tail -->
+  <path d="M52,30 Q56,28 54,24"/>
+</svg>

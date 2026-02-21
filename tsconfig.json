@@ -19,7 +19,11 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@nexbe/nexbi": ["../shared/nexbi/index.ts"],
+      "@nexbe/nexbi/*": ["../shared/nexbi/*"],
+      "@nexbe/icons": ["../shared/icons/index.ts"],
+      "@nexbe/icons/*": ["../shared/icons/*"]
     }
   },
   "include": [

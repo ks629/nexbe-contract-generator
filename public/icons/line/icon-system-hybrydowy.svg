@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="System hybrydowy — panel, bateria, dom" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>System hybrydowy — panel, bateria, dom</title>
+  <!-- Solar panel (top left) -->
+  <rect x="4" y="6" width="16" height="12" rx="2"/>
+  <line x1="12" y1="6" x2="12" y2="18" opacity="0.5"/>
+  <line x1="4" y1="12" x2="20" y2="12" opacity="0.5"/>
+  <!-- Battery (top right) -->
+  <rect x="44" y="6" width="14" height="12" rx="2"/>
+  <rect x="49" y="4" width="4" height="2" rx="1"/>
+  <line x1="48" y1="12" x2="54" y2="12" opacity="0.5"/>
+  <!-- House (bottom center) -->
+  <path d="M20,38 L32,28 L44,38"/>
+  <rect x="22" y="38" width="20" height="16" rx="2"/>
+  <rect x="29" y="44" width="6" height="10" rx="1"/>
+  <!-- Connection lines -->
+  <path d="M20,14 L28,14 L32,24"/>
+  <path d="M44,14 L36,14 L32,24"/>
+  <!-- Arrows on connections -->
+  <polyline points="26,16 28,14 26,12" opacity="0.6"/>
+  <polyline points="38,12 36,14 38,16" opacity="0.6"/>
+  <!-- Central node -->
+  <circle cx="32" cy="24" r="3"/>
+  <!-- Lightning in node -->
+  <path d="M31,22 L33,22 L31.5,25 L33.5,25 L31,28" stroke-width="1.5"/>
+</svg>

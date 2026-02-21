@@ -13,9 +13,9 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { toast } from 'sonner';
 import {
-  Download, Send, ExternalLink, ArrowLeft, FileText, User, Package,
-  CreditCard, Shield, Zap, Battery, Info,
+  Download, Send, ExternalLink, ArrowLeft, User, Package, Info,
 } from 'lucide-react';
+import { NexbeIcon } from '@nexbe/icons';
 
 function PreviewContent() {
   const searchParams = useSearchParams();
@@ -66,8 +66,8 @@ function PreviewContent() {
       <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
         <Card className="bg-white/[0.03] border-white/10">
           <CardContent className="p-12 text-center">
-            <FileText className="h-16 w-16 text-white/10 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-white/60 mb-4">Nie znaleziono umowy</h3>
+            <NexbeIcon name="dokumenty" size={64} variant="inherit" className="text-white/40 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-white/70 mb-4">Nie znaleziono umowy</h3>
             <Link href="/">
               <Button variant="outline" className="border-white/10 text-white/70">
                 <ArrowLeft className="mr-2 h-4 w-4" /> Wróć do listy
@@ -86,11 +86,11 @@ function PreviewContent() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
-          <Link href="/" className="text-sm text-white/40 hover:text-white/60 flex items-center gap-1 mb-2">
+          <Link href="/" className="text-sm text-white/60 hover:text-white/80 flex items-center gap-1 mb-2">
             <ArrowLeft className="h-3.5 w-3.5" /> Powrót do listy
           </Link>
           <h1 className="text-2xl font-bold text-white">{d.contractNumber}</h1>
-          <p className="text-white/50 text-sm mt-1">
+          <p className="text-white/60 text-sm mt-1">
             Umowa z dnia {formatDatePolish(d.contractDate)}
           </p>
         </div>
@@ -125,7 +125,7 @@ function PreviewContent() {
           </CardHeader>
           <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <p className="text-xs text-white/40 uppercase mb-2">Wykonawca</p>
+              <p className="text-xs text-white/60 uppercase mb-2">Wykonawca</p>
               <p className="text-white font-medium">Nexbe sp. z o.o.</p>
               <p className="text-sm text-white/60">ul. Stefana Batorego 18/108</p>
               <p className="text-sm text-white/60">02-591 Warszawa</p>
@@ -136,7 +136,7 @@ function PreviewContent() {
               )}
             </div>
             <div>
-              <p className="text-xs text-white/40 uppercase mb-2">Zamawiający</p>
+              <p className="text-xs text-white/60 uppercase mb-2">Zamawiający</p>
               <p className="text-white font-medium">{d.client?.fullName}</p>
               <p className="text-sm text-white/60">{d.client?.address?.street}</p>
               <p className="text-sm text-white/60">
@@ -160,17 +160,17 @@ function PreviewContent() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <Battery className="h-4 w-4 text-green-400" />
+                  <NexbeIcon name="magazyn-energii" size={16} variant="inherit" className="text-green-400" />
                   <span className="text-sm text-white/60">Magazyn energii:</span>
                   <span className="text-sm text-white font-medium">{d.product?.model}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Zap className="h-4 w-4 text-amber-400" />
+                  <NexbeIcon name="smart-ems" size={16} variant="inherit" className="text-amber-400" />
                   <span className="text-sm text-white/60">Falownik:</span>
                   <span className="text-sm text-white font-medium">{d.product?.inverterModel}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Shield className="h-4 w-4 text-blue-400" />
+                  <NexbeIcon name="blackout-ochrona" size={16} variant="inherit" className="text-blue-400" />
                   <span className="text-sm text-white/60">Backup EPS/SZR:</span>
                   <span className="text-sm text-white font-medium">{d.product?.backupEPS ? 'Tak' : 'Nie'}</span>
                 </div>
@@ -199,7 +199,7 @@ function PreviewContent() {
           </CardHeader>
           <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <p className="text-xs text-white/40 uppercase mb-2">Adres montażu</p>
+              <p className="text-xs text-white/60 uppercase mb-2">Adres montażu</p>
               <p className="text-white">{d.investmentAddress?.street || d.client?.address?.street}</p>
               <p className="text-white/60 text-sm">
                 {d.investmentAddress?.postalCode || d.client?.address?.postalCode}{' '}
@@ -207,7 +207,7 @@ function PreviewContent() {
               </p>
             </div>
             <div>
-              <p className="text-xs text-white/40 uppercase mb-2">Istniejąca instalacja PV</p>
+              <p className="text-xs text-white/60 uppercase mb-2">Istniejąca instalacja PV</p>
               <p className="text-sm text-white/60">
                 Moc: <span className="text-white">{d.existingPV?.power_kWp} kWp</span>
               </p>
@@ -225,7 +225,7 @@ function PreviewContent() {
         <Card className="bg-[#B5005D]/5 border-[#B5005D]/20">
           <CardHeader className="pb-3">
             <CardTitle className="text-white flex items-center gap-2 text-base">
-              <CreditCard className="h-4 w-4 text-[#B5005D]" /> Wynagrodzenie
+              <NexbeIcon name="raty" size={16} variant="inherit" className="text-[#B5005D]" /> Wynagrodzenie
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -240,17 +240,17 @@ function PreviewContent() {
                 <div className="rounded-lg bg-white/5 p-3">
                   <p className="text-xs text-white/40">Transza 1 (30%)</p>
                   <p className="text-lg font-bold text-white">{formatPLN(d.pricing?.tranches?.t1_amount || 0)}</p>
-                  <p className="text-xs text-white/30">3 dni od podpisania</p>
+                  <p className="text-xs text-white/60">3 dni od podpisania</p>
                 </div>
                 <div className="rounded-lg bg-white/5 p-3">
                   <p className="text-xs text-white/40">Transza 2 (60%)</p>
                   <p className="text-lg font-bold text-white">{formatPLN(d.pricing?.tranches?.t2_amount || 0)}</p>
-                  <p className="text-xs text-white/30">3 dni od dostawy</p>
+                  <p className="text-xs text-white/60">3 dni od dostawy</p>
                 </div>
                 <div className="rounded-lg bg-white/5 p-3">
                   <p className="text-xs text-white/40">Transza 3 (10%)</p>
                   <p className="text-lg font-bold text-white">{formatPLN(d.pricing?.tranches?.t3_amount || 0)}</p>
-                  <p className="text-xs text-white/30">3 dni po montażu</p>
+                  <p className="text-xs text-white/60">3 dni po montażu</p>
                 </div>
               </div>
             ) : (
@@ -263,7 +263,7 @@ function PreviewContent() {
                     Wkład własny: <span className="text-white font-medium">{formatPLN(d.pricing.ownContribution)}</span>
                   </p>
                 )}
-                <p className="text-xs text-white/30 mt-2">
+                <p className="text-xs text-white/60 mt-2">
                   Płatność przez instytucję finansującą
                   {d.pricing?.financingInstitution ? `: ${d.pricing.financingInstitution}` : ''}
                 </p>
@@ -304,7 +304,7 @@ function PreviewContent() {
         <DialogContent className="bg-[#12101f] border-white/10 text-white">
           <DialogHeader>
             <DialogTitle>Podpis elektroniczny — Autenti</DialogTitle>
-            <DialogDescription className="text-white/50">
+            <DialogDescription className="text-white/60">
               Integracja z Autenti API w przygotowaniu
             </DialogDescription>
           </DialogHeader>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbi-icon" aria-label="NEXBi wskazujący na formularz">
+  <title>NEXBi wskazujący na formularz</title>
+  <!-- Antenna -->
+  <rect x="23" y="9" width="2" height="9" rx="1" fill="none" stroke="#F0E8FF" stroke-width="1.2"/>
+  <circle cx="24" cy="8" r="2.5" fill="none" stroke="#FF004E" stroke-width="1.2"/>
+  <!-- Body -->
+  <rect x="11" y="18" width="26" height="34" rx="6" fill="none" stroke="#F0E8FF" stroke-width="1.5"/>
+  <!-- Left eye -->
+  <rect x="15" y="26" width="7" height="9" rx="2.5" fill="none" stroke="#FF004E" stroke-width="1.2"/>
+  <circle cx="18.5" cy="30" r="1.5" fill="#F0E8FF"/>
+  <!-- Right eye (looking right) -->
+  <rect x="26" y="26" width="7" height="9" rx="2.5" fill="none" stroke="#FF004E" stroke-width="1.2"/>
+  <circle cx="30" cy="30" r="1.5" fill="#F0E8FF"/>
+  <!-- Mouth happy -->
+  <path d="M20,38 Q24,41 28,38" fill="none" stroke="#FF004E" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Left arm -->
+  <rect x="0" y="30" width="5" height="12" rx="2.5" fill="none" stroke="#F0E8FF" stroke-width="1.5" transform="rotate(-8 2.5 36)"/>
+  <circle cx="0" cy="43" r="3.5" fill="none" stroke="#F0E8FF" stroke-width="1.2"/>
+  <!-- Right arm (pointing) -->
+  <rect x="40" y="26" width="5" height="14" rx="2.5" fill="none" stroke="#F0E8FF" stroke-width="1.5" transform="rotate(25 42.5 33)"/>
+  <circle cx="46" cy="24" r="3.5" fill="none" stroke="#F0E8FF" stroke-width="1.2"/>
+  <!-- Clipboard / Form -->
+  <rect x="44" y="10" width="16" height="28" rx="2" fill="#1A0033" stroke="#B5005D" stroke-width="1"/>
+  <!-- Clipboard clip -->
+  <rect x="49" y="8" width="6" height="4" rx="1.5" fill="#B5005D"/>
+  <!-- Form fields -->
+  <rect x="47" y="16" width="10" height="2.5" rx="0.5" fill="#B5005D" opacity="0.3"/>
+  <rect x="47" y="21" width="10" height="2.5" rx="0.5" fill="#B5005D" opacity="0.3"/>
+  <rect x="47" y="26" width="10" height="2.5" rx="0.5" fill="#B5005D" opacity="0.3"/>
+  <!-- Checkmarks -->
+  <path d="M48,32 L49.5,33.5 L52,31" fill="none" stroke="#FF004E" stroke-width="1" stroke-linecap="round"/>
+  <!-- Left leg -->
+  <rect x="16" y="52" width="5" height="7" rx="2.5" fill="none" stroke="#F0E8FF" stroke-width="1.2"/>
+  <rect x="13" y="57" width="9" height="4" rx="2" fill="none" stroke="#F0E8FF" stroke-width="1.5"/>
+  <!-- Right leg -->
+  <rect x="27" y="52" width="5" height="7" rx="2.5" fill="none" stroke="#F0E8FF" stroke-width="1.2"/>
+  <rect x="26" y="57" width="9" height="4" rx="2" fill="none" stroke="#F0E8FF" stroke-width="1.5"/>
+</svg>

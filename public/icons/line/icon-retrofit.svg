@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Retrofit — modernizacja falownika" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Retrofit — modernizacja falownika</title>
+  <!-- Inverter box (center) -->
+  <rect x="20" y="22" width="24" height="20" rx="3"/>
+  <!-- LED indicator -->
+  <circle cx="32" cy="36" r="1.5"/>
+  <!-- Circular arrows (upgrade) -->
+  <path d="M14,18 A22,22 0 0,1 50,18"/>
+  <polyline points="46,14 50,18 46,22"/>
+  <path d="M50,46 A22,22 0 0,1 14,46"/>
+  <polyline points="18,50 14,46 18,42"/>
+  <!-- Up arrow (improvement) -->
+  <line x1="32" y1="30" x2="32" y2="26"/>
+  <polyline points="29,28 32,25 35,28"/>
+</svg>

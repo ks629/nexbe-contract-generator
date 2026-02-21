@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Samochód elektryczny" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Samochód elektryczny</title>
+  <!-- Car body -->
+  <path d="M8,38 L12,26 Q14,22 20,22 L44,22 Q50,22 52,26 L56,38"/>
+  <path d="M4,38 L4,46 Q4,48 6,48 L14,48 Q16,48 16,46 L16,44 L48,44 L48,46 Q48,48 50,48 L58,48 Q60,48 60,46 L60,38 Q60,36 58,36 L6,36 Q4,36 4,38Z"/>
+  <!-- Windows -->
+  <path d="M18,26 L22,26 L21,34 L14,34Z" opacity="0.5"/>
+  <path d="M26,26 L42,26 L43,34 L25,34Z" opacity="0.5"/>
+  <!-- Wheels -->
+  <circle cx="16" cy="46" r="5"/>
+  <circle cx="48" cy="46" r="5"/>
+  <!-- Lightning bolt -->
+  <path d="M30,30 L33,30 L31,34 L34,34 L29,40 L30,36 L28,36Z"/>
+</svg>

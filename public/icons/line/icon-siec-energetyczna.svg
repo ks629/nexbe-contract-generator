@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Sieć energetyczna — sprzedaż i zakup energii" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Sieć energetyczna — sprzedaż i zakup energii</title>
+  <!-- House (left) -->
+  <path d="M6,30 L18,20 L30,30"/>
+  <rect x="10" y="30" width="16" height="14" rx="2"/>
+  <rect x="15" y="36" width="6" height="8" rx="1"/>
+  <!-- Grid tower (right) -->
+  <rect x="46" y="16" width="12" height="32" rx="2"/>
+  <line x1="46" y1="24" x2="58" y2="24" opacity="0.5"/>
+  <line x1="46" y1="32" x2="58" y2="32" opacity="0.5"/>
+  <line x1="46" y1="40" x2="58" y2="40" opacity="0.5"/>
+  <!-- Bidirectional arrows -->
+  <line x1="30" y1="34" x2="46" y2="28"/>
+  <polyline points="42,26 46,28 44,32"/>
+  <line x1="30" y1="40" x2="46" y2="38"/>
+  <polyline points="34,42 30,40 32,36"/>
+  <!-- Lightning bolt -->
+  <path d="M36,20 L39,20 L37,24 L40,24 L35,30" stroke-width="1.5" opacity="0.5"/>
+</svg>

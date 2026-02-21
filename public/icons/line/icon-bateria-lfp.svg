@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Bateria LFP — bezpieczeństwo" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Bateria LFP — bezpieczeństwo</title>
+  <!-- Battery body -->
+  <rect x="16" y="14" width="32" height="40" rx="4"/>
+  <!-- Battery terminal -->
+  <rect x="28" y="8" width="8" height="6" rx="2"/>
+  <!-- Charge segments -->
+  <rect x="22" y="38" width="20" height="8" rx="1.5"/>
+  <rect x="22" y="27" width="20" height="8" rx="1.5"/>
+  <!-- Shield check (safety) -->
+  <path d="M32,18 L40,22 L40,28 Q40,34 32,36 Q24,34 24,28 L24,22Z" opacity="0.5"/>
+  <path d="M28,27 L31,30 L36,24" stroke-width="2"/>
+</svg>

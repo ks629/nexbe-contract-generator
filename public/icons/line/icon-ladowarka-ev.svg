@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="nexbe-icon" aria-label="Ładowarka samochodów elektrycznych" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Ładowarka samochodów elektrycznych</title>
+  <!-- Charging station body -->
+  <rect x="12" y="8" width="24" height="40" rx="4"/>
+  <!-- Screen -->
+  <rect x="17" y="14" width="14" height="10" rx="2"/>
+  <!-- Lightning on screen -->
+  <path d="M23,16 L25,16 L23,20 L26,20 L22,24 L23,21 L21,21Z"/>
+  <!-- Cable -->
+  <path d="M36,32 Q44,32 44,40 Q44,50 36,50"/>
+  <!-- Plug -->
+  <rect x="28" y="48" width="8" height="6" rx="2"/>
+  <line x1="31" y1="54" x2="31" y2="58"/>
+  <line x1="35" y1="54" x2="35" y2="58"/>
+  <!-- Base -->
+  <line x1="8" y1="48" x2="40" y2="48"/>
+  <rect x="16" y="48" width="16" height="4" rx="1"/>
+</svg>
