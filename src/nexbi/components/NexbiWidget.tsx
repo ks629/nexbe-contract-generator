@@ -210,7 +210,7 @@ export default function NexbiWidget({ knowledge }: Props) {
   };
 
   const phoneNumber = config.phoneNumber ?? '732 080 101';
-  const configuratorUrl = config.configuratorUrl ?? 'https://dotacjenamagazyny.nexbe.pl';
+  const configuratorUrl = config.configuratorUrl ?? 'https://konfigurator.nexbe.pl';
   const position = config.position ?? 'bottom-right';
   const positionClass = position === 'bottom-left' ? 'left-6' : 'right-6';
 
